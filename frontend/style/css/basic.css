@@ -1,0 +1,42 @@
+:root {
+    --strong: #eb8b17;
+    --border: #0C7075;
+    --links: #6DA5C0;
+    --button: #0C7075;
+    --background: #294D61;
+    --letter: #fff;
+  }
+  
+  * {
+    margin: 0%;
+    padding: 0%;
+    color: var(--letter);
+    overflow-anchor: none;
+    font-family: sans-serif;
+  }
+  
+  body {
+    background-color: var(--background);
+  }
+  button {
+    background-color: var(--button);
+    border-radius: 7px;
+    border-color: var(--border);
+    padding: 5px;
+    color: var(--letter);
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .buttonC1 {
+    width: 200px;
+    height: 40px;
+  }
+  .buttonC2 {
+    width: 100px;
+    height: 30px;
+  }
+  h1 {
+    font-size: 40px;
+    font-weight: bold;
+    color: var(--letter);
+  }
