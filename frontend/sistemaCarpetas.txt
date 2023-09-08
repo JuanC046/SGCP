@@ -1,0 +1,24 @@
+proyecto-frontend/
+│
+├── assets/
+│   ├── css/
+│   │   ├── estilos.css
+│   │   └── ...
+│   ├── img/
+│   │   ├── imagen1.jpg
+│   │   └── ...
+│   └── js/
+│       ├── script.js
+│       └── ...
+│
+├── html/
+│   ├── index.html
+│   ├── pagina1.html
+│   └── ...
+│
+├── js/
+│   ├── main.js
+│   ├── modulo1.js
+│   └── ...
+│
+└── ...
