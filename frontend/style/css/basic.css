@@ -1,5 +1,6 @@
 :root {
     --strong: #eb8b17;
+    --transparent: rgba(255, 255, 255, 0.1);
     --border: #0C7075;
     --links: #6DA5C0;
     --button: #0C7075;
@@ -23,7 +24,9 @@
     border-radius: 7px;
     border-color: var(--border);
     padding: 5px;
+    margin: 20px auto; /* Centrar los botones horizontalmente y agregar margen superior e inferior */
     color: var(--letter);
+    text-align: center;
     font-weight: bold;
     cursor: pointer;
   }
