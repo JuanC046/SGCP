@@ -1,0 +1,17 @@
+#body-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+#registrarProveedores,
+#verProveedores,
+#crearComprobanteDePago,
+#verComprobantesDePago,
+#cerrarSesion {
+    margin-bottom: 20px;
+    font-size: 16px;
+}

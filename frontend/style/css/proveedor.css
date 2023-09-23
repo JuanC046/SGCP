@@ -1,0 +1,40 @@
+#body-proveedor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    padding: 5px;
+    margin-top: 10px;
+}
+#nombre,
+#nit-cc,
+#ciudad,
+#telefono {
+    width: 30%;
+    height: 10px;
+    text-align: center;
+    padding: 10px;
+    background-color: var(--transparent);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+}
+
+#wrapper-options{
+    width: 800px;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin-top: 0px;
+}
+#buttonEditar,
+#buttonGuardar,
+#buttonExportar,
+#buttonRegresar{
+    margin-top: 100px;
+    text-align: center;
+    width: 150px;
+    margin-top: 0px;
+}

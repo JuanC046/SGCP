@@ -7,21 +7,36 @@
     <title>ListaCP/SGCP</title>
   </head>
   <body id="body-listaComprobantePago">
+    <header>
+      <nav>
         <a href="menu.html">
-            <button id="buttonMenu" class="buttonC2">MENÚ</button>
-          </a>
-          <h2>COMPROBANTES DE PAGO</h2>
+          <button id="buttonMenu" class="buttonC2">MENÚ</button>
+        </a>
+        <h2>COMPROBANTES DE PAGO</h2>
+        <a href="comprobantePago.html">
           <button id="buttonCrear" class="buttonC2">CREAR</button>
+      </a>
+      </nav>
+    </header>
     <h4 id="wrapper-titulosCP">
-      <label for="nComprobante">N° COMPROBANTE</label>
-      <label for="fecha">FECHA</label>
-      <label for="proveedor">PROVEEDOR</label>
-      <label for="valor">VALOR</label>
+      <label for="nComprobante" id="label-nComprobante">N° COMPROBANTE</label>
+      <label for="fecha" id="label-fecha">FECHA</label>
+      <label for="proveedor" id="label-proveedor">PROVEEDOR</label>
+      <label for="valor" id="label-valor">VALOR</label>
     </h4>
     <ol>
-      <li>Primer elemento</li>
-      <li>Segundo elemento</li>
-      <li>Tercer elemento</li>
+      <p>Selecciona una opción:</p>
+      <input type="radio" id="opcion1" name="opcion" value="opcion1" />
+      <label for="opcion1">Opción 1</label
+      ><br />
+
+      <input type="radio" id="opcion2" name="opcion" value="opcion2" />
+      <label for="opcion2">Opción 2</label
+      ><br />
+
+      <input type="radio" id="opcion3" name="opcion" value="opcion3" />
+      <label for="opcion3">Opción 3</label
+      ><br />
     </ol>
     <footer>
       <button id="buttonVer" class="buttonC2">VER</button>

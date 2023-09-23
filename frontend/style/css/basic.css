@@ -13,6 +13,7 @@
     padding: 0%;
     color: var(--letter);
     overflow-anchor: none;
+    font-size: 16px;
     font-family: sans-serif;
   }
   
@@ -24,14 +25,16 @@
     border-radius: 7px;
     border-color: var(--border);
     padding: 5px;
-    margin: 20px auto; /* Centrar los botones horizontalmente y agregar margen superior e inferior */
+    margin: 10px auto; /* Centrar los botones horizontalmente y agregar margen superior e inferior */
     color: var(--letter);
     text-align: center;
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
   }
   .buttonC1 {
-    width: 200px;
+    margin-top: 10px;
+    width: 300px;
     height: 40px;
   }
   .buttonC2 {
@@ -39,7 +42,16 @@
     height: 30px;
   }
   h1 {
-    font-size: 40px;
+    margin-top: 10px;
+    font-size: 25px;
     font-weight: bold;
     color: var(--letter);
+  }
+  h2{
+    margin-top: 10px;
+    font-size: 20px;
+  }
+  h3{
+    margin-top: 10px;
+    font-size: 18px;
   }

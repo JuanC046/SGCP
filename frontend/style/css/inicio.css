@@ -1,31 +1,25 @@
-/* Resetear los márgenes y el relleno del cuerpo y establecer un fondo */
-body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+#body-inicio {
+    display: grid;
+    place-items: center;
+    height: 100vh; /* Esto centra en vertical también */
 }
 
-/* Estilos para el encabezado */
 h1 {
-    text-align: center;
-    margin-top: 5px; /* Ajusta el margen superior según sea necesario */
-    margin-bottom: 150px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
-/* Estilos para los botones */
-.buttonC1 {
-    border-radius: 5px;
-    text-align: center;
-    text-decoration: none;
-    margin-bottom: 80px;
-    font-size: 18px;
+
+#buttonIngresar {
+    grid-row: 2;
+    grid-column: 3;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+#buttonRegistrarse {
+    grid-row: 3;
+    grid-column: 3;
+    margin-top: 10px;
+    margin-bottom: 50px;
 }
 
-/* Estilos para los enlaces */
-a {
-    text-decoration: none; /* Evitar subrayado en los enlaces */
-}

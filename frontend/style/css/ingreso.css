@@ -1,46 +1,45 @@
 /* Resetear los márgenes y el relleno del cuerpo y establecer un fondo */
-body {
+#body-ingreso {
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     height: 100vh;  
 }
 
 /* Estilos para el encabezado */
 h1 {
-    text-align: center;
-    margin-top: 10px; /* Ajusta el margen superior según sea necesario */
-    margin-bottom: 50px;
-}
-
-/* Estilos para el título "INGRESAR A MI CUENTA" */
-h3 {
-    text-align: center;
     margin-top: 10px; /* Ajusta el margen superior según sea necesario */
     margin-bottom: 30px;
 }
 
+/* Estilos para el título "INGRESAR A MI CUENTA" */
+h3 {
+    margin-top: 10px; /* Ajusta el margen superior según sea necesario */
+    margin-bottom: 20px;
+}
+
 /* Estilos para las etiquetas de usuario y contraseña */
-label {
-    display: block;
-    text-align: center;
+#label-usuario,
+#label-contrasena {
+    margin-left: 0px;
     margin-top: 20px; /* Espacio entre las etiquetas y los campos de entrada */
     margin-bottom: 20px;
     font-weight: bold; /* Hacer que las etiquetas sean más visibles */
 }
 
 /* Estilos para los campos de entrada */
-input[type="text"],
-input[type="password"] {
+#usuario,
+#contrasena {
     width: 30%;
     padding: 10px;
     margin: 5px 0;
-    background-color: var(--button);
-    text-align: center;
-    border: 1px solid #ccc;
+    background-color: var(--transparent);
+    text-align: left;
+    border: 1px solid var(--border);
     border-radius: 5px;
 }
 
@@ -51,7 +50,6 @@ input[type="password"] {
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-    font-size: 18px;
 }
 
 
