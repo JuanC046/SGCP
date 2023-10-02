@@ -8,17 +8,22 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
-app.use(express.static("public"));
-app.set("views", path.join(__dirname, "html"));
+
+// Configurar vistas y motor de plantillas
+app.set("views", path.join(__dirname, "frontend/views"));
 app.set("view engine", "ejs");
 
-loadEndpoint(app)
 
+// Configurar rutas estáticas
+app.use(express.static("frontend"));
+app.use(express.static(path.join(__dirname, 'frontend')));
+
+loadEndpoint(app);
 
 app.set("port", config.port);
 
 app.listen(app.get("port"), () => {
   console.log(
-    `[SERVER]: App running on port on http://localhost:${app.get("port")}`
+    `[SERVER]: App running on port on http://localhost:${app.get("port")}/sgcp/v1`
   );
 });
