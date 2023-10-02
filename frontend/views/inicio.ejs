@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/css/main.css">
+    <title>SGCP</title>
+</head>
+<body id="body-inicio">
+    <h1>SISTEMA DE GESTIÓN DE COMPROBANTES DE PAGO</h1>
+    <a href="/sgcp/v1/ingreso">
+        <button id ="buttonIngresar" class ="buttonC1">INGRESAR</button>
+    </a>
+    <a href="/sgcp/v1/registro">
+        <button id = "buttonRegistrarse" class="buttonC1">REGISTRARSE</button>
+    </a>
+    
+</body>
+<script>
+    const buttonRegistrarse = document.getElementById("buttonRegistrarse");
+    buttonRegistrarse.addEventListener("click", () => {
+        fetch("/registro")
+            .then(response => response.text())
+            .then(message => console.log(message))
+            .catch(error => console.error(error));
+    });
+</script>
+</html>
