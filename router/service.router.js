@@ -9,6 +9,11 @@ const {
     listaComprobantesDePago_fecha,
     existeUsuario,
     crearUsuario,
+    existeProveedor,
+    crearProveedor,
+    listaProveedoresCompPago,
+    ultimoCompPago,
+    crearCompPago
 } = require('../service/data.service');
 
 router.use(express.json());
@@ -85,7 +90,94 @@ router.post("/registro/usuario", async (req, res) => {
       });
   });
   
+  router.post("/registro/proveedor", async (req, res) => {
+    const userId  = req.body.userId;
+    const id_proveedor = req.body.id_proveedor;
+    existeProveedor(userId, id_proveedor)
+      .then((result) => {
+        console.log('Resultado de la consulta:', result);
+        if (result.length === 0) { // No existe el proveedor
+          const datos = [
+            req.body.id_proveedor,
+            req.body.nombre,
+            req.body.ciudad,
+            req.body.telefono,
+            req.body.userId
+          ];
+          crearProveedor(datos)
+            .then(() => {
+              console.log('Proveedor creado con éxito');
+              res.status(200).json({ message: 'Proveedor creado con éxito' });
+            })
+            .catch((error) => {
+              console.error('Error en la consulta:', error);
+              res.status(400).json({ error: 'Error al crear el proveedor' });
+            });
+        } else {
+          const mensaje = "El proveedor ya existe";
+          res.status(400).json({ error: mensaje });
+        }
+      })
+      .catch((error) => {
+        console.error('Error en la consulta:', error);
+        res.status(400).json({ error: 'Error en la consulta' });
+      });
+  });
 
+  router.get("/obtener/listaProveedores/comprobantePago", async (req,res) =>{
+    const userId = req.body.userId;
+    
+    listaProveedoresCompPago(userId)
+        .then((result) => {
+            console.log('Resultado de la consulta:', result);
+            res.status(200).json(result);
+        })
+        .catch((error) => {
+            console.error('Error en la consulta:', error);
+            res.status(400);
+        });
+    
+});
+
+router.get("/obtener/ultimo/comprobantePago", async (req,res) =>{
+    const userId = req.body.userId;
+    
+    ultimoCompPago(userId)
+        .then((result) => {
+            console.log('Resultado de la consulta:', result);
+            res.status(200).json(result);
+        })
+        .catch((error) => {
+            console.error('Error en la consulta:', error);
+            res.status(400);
+        });
+    
+});
+
+router.post("/crear/comprobantePago", async (req, res) => {
+    const datos = [
+        req.body.num_comprobante,
+        req.body.userId,
+        req.body.fecha,
+        req.body.id_proveedor,
+        req.body.descripcion_pago,
+        req.body.descripcion_descuento,
+        req.body.valor_descuento,
+        req.body.valor_bruto,
+        req.body.valor_neto
+      ];
+    crearCompPago(datos)
+      .then((result) => {
+        console.log('Resultado de la consulta:', result);
+        console.log('Comprobante de pago creado con éxito');
+        res.status(200).json({ message: 'Comprobante de pago creado con éxito' });
+      })
+      .catch((error) => {
+        console.error('Error en la consulta:', error);
+        res.status(400).json({ error: 'Error al crear el comprobante de pago' });
+      });
+  });
+  
 router.get("/obtener/listaProveedores", async (req,res) =>{
     const userId = req.body.userId;
     
