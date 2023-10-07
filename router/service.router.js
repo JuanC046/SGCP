@@ -18,6 +18,8 @@ const {
     actualizarProveedor,
     datosComprobantePago,
     actualizarComprobantePago,
+    eliminarProveedor,
+    eliminarComprobantePago
 } = require('../service/data.service');
 
 router.use(express.json());
@@ -315,6 +317,40 @@ router.put("/actualizar/ComprobantePago", async (req, res) => {
       console.error('Error en la consulta:', error);
       res.status(400).json({ error: 'Error al actualizar comprobante de pago' });
     });
+});
+
+router.delete("/eliminar/Proveedor", async (req,res) =>{
+  const id_usuario = req.body.id_usuario;
+  const id_proveedor = req.body.id_proveedor;
+ 
+  eliminarProveedor(id_usuario,id_proveedor)
+  .then((result) => {
+    console.log('Resultado de la consulta:', result);
+    console.log('Proveedor eliminado con éxito');
+    res.status(200).json({ message: 'Proveedor eliminado con éxito' });
+  })
+  .catch((error) => {
+    console.error('Error en la consulta:', error);
+    res.status(400).json({ error: 'Error al eliminar proveedor' });
+  });
+          
+});
+
+router.delete("/eliminar/ComprobantePago", async (req,res) =>{
+  const id_usuario = req.body.id_usuario;
+  const num_comprobante = req.body.num_comprobante;
+ 
+  eliminarComprobantePago(id_usuario,num_comprobante)
+  .then((result) => {
+    console.log('Resultado de la consulta:', result);
+    console.log('Comprobante de pago eliminado con éxito');
+    res.status(200).json({ message: 'Comprobante de pago eliminado con éxito' });
+  })
+  .catch((error) => {
+    console.error('Error en la consulta:', error);
+    res.status(400).json({ error: 'Error al eliminar comprobante de pago' });
+  });
+          
 });
 
 module.exports = router;

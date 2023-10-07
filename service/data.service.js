@@ -52,7 +52,9 @@ const existeUsuario = async (id_usuario) => {
 const crearUsuario = async (datos) => {
   try {
     const connection = await createDatabaseConnection(); // Obtiene la conexión desde el módulo
-    const sql = "INSERT INTO usuarios (id_usuario, contrasena, nombre, segundo_nombre, apellido, segundo_apellido, tipo_documento) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    const sql = `INSERT INTO usuarios 
+    (id_usuario, contrasena, nombre, segundo_nombre, apellido, segundo_apellido, tipo_documento) 
+    VALUES (?, ?, ?, ?, ?, ?, ?)`;
     const [rows, fields] = await connection.execute(sql, datos);
     connection.end(); // Cierra la conexión cuando hayas terminado
 
@@ -82,7 +84,8 @@ const existeProveedor = async (id_usuario, id_proveedor) => {
 const crearProveedor = async (datos) => {
   try {
     const connection = await createDatabaseConnection(); // Obtiene la conexión desde el módulo
-    const sql = "INSERT INTO proveedores (id_proveedor, nombre, ciudad, telefono, id_usuario) VALUES (?, ?, ?, ?, ?)";
+    const sql = `INSERT INTO proveedores 
+    (id_proveedor, nombre, ciudad, telefono, id_usuario) VALUES (?, ?, ?, ?, ?)`;
     await connection.execute(sql, datos);
     connection.end(); // Cierra la conexión cuando hayas terminado
 
@@ -97,7 +100,8 @@ const crearProveedor = async (datos) => {
 const listaProveedoresCompPago = async (id_usuario) => {
   try {
     const connection = await createDatabaseConnection(); // Obtiene la conexión desde el módulo
-    const sql = "SELECT id_proveedor, nombre FROM proveedores WHERE id_usuario = ?";
+    const sql = `SELECT id_proveedor, nombre 
+    FROM proveedores WHERE id_usuario = ? AND eliminado != 1`;
     const [rows, fields] = await connection.execute(sql, [id_usuario]);
     connection.end(); // Cierra la conexión cuando hayas terminado
 
@@ -139,7 +143,8 @@ const crearCompPago = async (datos) => {
 const listaProveedores = async (id_usuario) => {
   try {
     const connection = await createDatabaseConnection(); // Obtiene la conexión desde el módulo
-    const sql = "SELECT nombre, id_proveedor, ciudad FROM proveedores WHERE id_usuario = ?";
+    const sql = `SELECT nombre, id_proveedor, ciudad 
+    FROM proveedores WHERE id_usuario = ? AND eliminado != 1`;
     const [rows, fields] = await connection.execute(sql, [id_usuario]);
     connection.end(); // Cierra la conexión cuando hayas terminado
 
@@ -158,7 +163,7 @@ const listaComprobantesDePago = async (id_usuario) => {
     FROM comprobantes_de_pago 
     LEFT JOIN (SELECT * FROM proveedores WHERE id_usuario = ?) AS proveedores2 
     ON comprobantes_de_pago.id_proveedor = proveedores2.id_proveedor 
-    WHERE comprobantes_de_pago.id_usuario = ?`;
+    WHERE comprobantes_de_pago.id_usuario = ? AND comprobantes_de_pago.eliminado != 1`;
     const [rows, fields] = await connection.execute(sql, [id_usuario, id_usuario]);
     connection.end(); // Cierra la conexión cuando hayas terminado
 
@@ -176,7 +181,7 @@ const listaComprobantesDePago_proveedor = async (id_usuario) => {
     FROM comprobantes_de_pago 
     LEFT JOIN (SELECT * FROM proveedores WHERE id_usuario = ?) AS proveedores2 
     ON comprobantes_de_pago.id_proveedor = proveedores2.id_proveedor 
-    WHERE comprobantes_de_pago.id_usuario = ? ORDER BY proveedores2.id_proveedor`;
+    WHERE comprobantes_de_pago.id_usuario = ? AND comprobantes_de_pago.eliminado != 1 ORDER BY proveedores2.id_proveedor`;
     const [rows, fields] = await connection.execute(sql, [id_usuario, id_usuario]);
     connection.end(); // Cierra la conexión cuando hayas terminado
 
@@ -195,7 +200,7 @@ const listaComprobantesDePago_fecha = async (id_usuario) => {
     FROM comprobantes_de_pago 
     LEFT JOIN (SELECT * FROM proveedores WHERE id_usuario = ?) AS proveedores2 
     ON comprobantes_de_pago.id_proveedor = proveedores2.id_proveedor 
-    WHERE comprobantes_de_pago.id_usuario = ? ORDER BY comprobantes_de_pago.fecha DESC`;
+    WHERE comprobantes_de_pago.id_usuario = ? AND comprobantes_de_pago.eliminado != 1 ORDER BY comprobantes_de_pago.fecha DESC`;
     const [rows, fields] = await connection.execute(sql, [id_usuario, id_usuario]);
     connection.end(); // Cierra la conexión cuando hayas terminado
 
@@ -273,6 +278,39 @@ const actualizarComprobantePago = async (datos) => {
   }
 };
 
+//Borrar Proveedor (borrado logico)
+const eliminarProveedor = async (id_usuario,id_proveedor) => {
+  try {
+    const connection = await createDatabaseConnection(); // Obtiene la conexión desde el módulo
+    const sql = `UPDATE proveedores SET eliminado = 1
+    WHERE id_usuario = ? AND id_proveedor = ?`;
+    await connection.execute(sql, [id_usuario,id_proveedor]);
+    connection.end(); // Cierra la conexión cuando hayas terminado
+
+    return true; // Retorna los resultados de la consulta
+  } catch (error) {
+    console.error("Error al ejecutar la consulta: " + error.message);
+    throw error; // Lanza el error para que pueda ser manejado en un nivel superior
+  }
+};
+
+//Borrar Comprobante de pago (borrado logico)
+const eliminarComprobantePago = async (id_usuario,id_proveedor) => {
+  try {
+    const connection = await createDatabaseConnection(); // Obtiene la conexión desde el módulo
+    const sql = `UPDATE comprobantes_de_pago SET eliminado = 1
+    WHERE id_usuario = ? AND num_comprobante = ?`;
+    await connection.execute(sql, [id_usuario,id_proveedor]);
+    connection.end(); // Cierra la conexión cuando hayas terminado
+
+    return true; // Retorna los resultados de la consulta
+  } catch (error) {
+    console.error("Error al ejecutar la consulta: " + error.message);
+    throw error; // Lanza el error para que pueda ser manejado en un nivel superior
+  }
+};
+
+
 module.exports = {
   listaProveedores,
   listaComprobantesDePago,
@@ -289,4 +327,6 @@ module.exports = {
   actualizarProveedor,
   datosComprobantePago,
   actualizarComprobantePago,
+  eliminarProveedor,
+  eliminarComprobantePago,
 };
