@@ -13,7 +13,9 @@ const {
     crearProveedor,
     listaProveedoresCompPago,
     ultimoCompPago,
-    crearCompPago
+    crearCompPago,
+    datosProveedor,
+    actualizarProveedor
 } = require('../service/data.service');
 
 router.use(express.json());
@@ -55,14 +57,14 @@ router.get("/proveedor",(req,res) =>{
 //-----------------------------------------------------
 
 router.post("/registro/usuario", async (req, res) => {
-    const userId = req.body.userId;
+    const id_usuario = req.body.id_usuario;
   
-    existeUsuario(userId)
+    existeUsuario(id_usuario)
       .then((result) => {
         console.log('Resultado de la consulta:', result);
         if (result.length === 0) { // No existe el usuario
           const datos = [
-            req.body.userId,
+            req.body.id_usuario,
             req.body.password,
             req.body.nombre,
             req.body.segundo_nombre,
@@ -91,9 +93,9 @@ router.post("/registro/usuario", async (req, res) => {
   });
   
   router.post("/registro/proveedor", async (req, res) => {
-    const userId  = req.body.userId;
+    const id_usuario  = req.body.id_usuario;
     const id_proveedor = req.body.id_proveedor;
-    existeProveedor(userId, id_proveedor)
+    existeProveedor(id_usuario, id_proveedor)
       .then((result) => {
         console.log('Resultado de la consulta:', result);
         if (result.length === 0) { // No existe el proveedor
@@ -102,7 +104,7 @@ router.post("/registro/usuario", async (req, res) => {
             req.body.nombre,
             req.body.ciudad,
             req.body.telefono,
-            req.body.userId
+            req.body.id_usuario
           ];
           crearProveedor(datos)
             .then(() => {
@@ -125,9 +127,9 @@ router.post("/registro/usuario", async (req, res) => {
   });
 
   router.get("/obtener/listaProveedores/comprobantePago", async (req,res) =>{
-    const userId = req.body.userId;
+    const id_usuario = req.body.id_usuario;
     
-    listaProveedoresCompPago(userId)
+    listaProveedoresCompPago(id_usuario)
         .then((result) => {
             console.log('Resultado de la consulta:', result);
             res.status(200).json(result);
@@ -140,9 +142,9 @@ router.post("/registro/usuario", async (req, res) => {
 });
 
 router.get("/obtener/ultimo/comprobantePago", async (req,res) =>{
-    const userId = req.body.userId;
+    const id_usuario = req.body.id_usuario;
     
-    ultimoCompPago(userId)
+    ultimoCompPago(id_usuario)
         .then((result) => {
             console.log('Resultado de la consulta:', result);
             res.status(200).json(result);
@@ -157,7 +159,7 @@ router.get("/obtener/ultimo/comprobantePago", async (req,res) =>{
 router.post("/crear/comprobantePago", async (req, res) => {
     const datos = [
         req.body.num_comprobante,
-        req.body.userId,
+        req.body.id_usuario,
         req.body.fecha,
         req.body.id_proveedor,
         req.body.descripcion_pago,
@@ -179,9 +181,9 @@ router.post("/crear/comprobantePago", async (req, res) => {
   });
   
 router.get("/obtener/listaProveedores", async (req,res) =>{
-    const userId = req.body.userId;
+    const id_usuario = req.body.id_usuario;
     
-    listaProveedores(userId)
+    listaProveedores(id_usuario)
         .then((result) => {
             console.log('Resultado de la consulta:', result);
             res.status(200).json(result);
@@ -194,9 +196,9 @@ router.get("/obtener/listaProveedores", async (req,res) =>{
 });
 
 router.get("/obtener/listaComprobantesDePago", async (req,res) =>{
-    const userId = req.body.userId;
+    const id_usuario = req.body.id_usuario;
 
-    listaComprobantesDePago(userId)
+    listaComprobantesDePago(id_usuario)
         .then((result) => {
             console.log('Resultado de la consulta:', result);
             res.status(200).json(result);
@@ -209,9 +211,9 @@ router.get("/obtener/listaComprobantesDePago", async (req,res) =>{
 });
 
 router.get("/obtener/por/proveedor/listaComprobantesDePago", async (req,res) =>{
-    const userId = req.body.userId;
+    const id_usuario = req.body.id_usuario;
 
-    listaComprobantesDePago_proveedor(userId)
+    listaComprobantesDePago_proveedor(id_usuario)
         .then((result) => {
             console.log('Resultado de la consulta:', result);
             res.status(200).json(result);
@@ -224,9 +226,9 @@ router.get("/obtener/por/proveedor/listaComprobantesDePago", async (req,res) =>{
 });
 
 router.get("/obtener/por/fecha/listaComprobantesDePago", async (req,res) =>{
-    const userId = req.body.userId;
+    const id_usuario = req.body.id_usuario;
 
-    listaComprobantesDePago_fecha(userId)
+    listaComprobantesDePago_fecha(id_usuario)
         .then((result) => {
             console.log('Resultado de la consulta:', result);
             res.status(200).json(result);
@@ -236,6 +238,43 @@ router.get("/obtener/por/fecha/listaComprobantesDePago", async (req,res) =>{
             res.status(400);
         });
     
+});
+
+router.get("/obtener/Proveedor", async (req,res) =>{
+  const id_usuario = req.body.id_usuario;
+  const id_proveedor = req.body.id_proveedor;
+  
+  datosProveedor(id_usuario, id_proveedor)
+      .then((result) => {
+          console.log('Resultado de la consulta:', result);
+          res.status(200).json(result);
+      })
+      .catch((error) => {
+          console.error('Error en la consulta:', error);
+          res.status(400);
+      });
+  
+});
+
+router.put("/actualizar/Proveedor", async (req, res) => {
+  const datos = [
+      req.body.id_proveedor,
+      req.body.nombre,
+      req.body.ciudad,
+      req.body.telefono,
+      req.body.id_antiguo_proveedor,
+      req.body.id_usuario
+    ];
+  actualizarProveedor(datos)
+    .then((result) => {
+      console.log('Resultado de la consulta:', result);
+      console.log('Proveedor actualizado con éxito');
+      res.status(200).json({ message: 'Proveedor actualizado con éxito' });
+    })
+    .catch((error) => {
+      console.error('Error en la consulta:', error);
+      res.status(400).json({ error: 'Error al actualizar proveedor' });
+    });
 });
 
 module.exports = router;
