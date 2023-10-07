@@ -15,7 +15,9 @@ const {
     ultimoCompPago,
     crearCompPago,
     datosProveedor,
-    actualizarProveedor
+    actualizarProveedor,
+    datosComprobantePago,
+    actualizarComprobantePago,
 } = require('../service/data.service');
 
 router.use(express.json());
@@ -274,6 +276,44 @@ router.put("/actualizar/Proveedor", async (req, res) => {
     .catch((error) => {
       console.error('Error en la consulta:', error);
       res.status(400).json({ error: 'Error al actualizar proveedor' });
+    });
+});
+
+router.get("/obtener/ComprobantePago", async (req,res) =>{
+  const id_usuario = req.body.id_usuario;
+  const num_comprobante = req.body.num_comprobante;
+  
+  datosComprobantePago(id_usuario, num_comprobante)
+      .then((result) => {
+          console.log('Resultado de la consulta:', result);
+          res.status(200).json(result);
+      })
+      .catch((error) => {
+          console.error('Error en la consulta:', error);
+          res.status(400);
+      });
+  
+});
+
+router.put("/actualizar/ComprobantePago", async (req, res) => {
+  const datos = [
+      req.body.descripcion_pago,
+      req.body.descripcion_descuento,
+      req.body.valor_descuento,
+      req.body.valor_bruto,
+      req.body.valor_neto,
+      req.body.num_comprobante,
+      req.body.id_usuario
+    ];
+  actualizarComprobantePago(datos)
+    .then((result) => {
+      console.log('Resultado de la consulta:', result);
+      console.log('Comprobante de pago actualizado con éxito');
+      res.status(200).json({ message: 'Comprobante de pago actualizado con éxito' });
+    })
+    .catch((error) => {
+      console.error('Error en la consulta:', error);
+      res.status(400).json({ error: 'Error al actualizar comprobante de pago' });
     });
 });
 

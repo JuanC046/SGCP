@@ -205,6 +205,7 @@ const listaComprobantesDePago_fecha = async (id_usuario) => {
     throw error; // Lanza el error para que pueda ser manejado en un nivel superior
   }
 };
+
 //Actualizar proveedor
 const datosProveedor = async (id_usuario,id_proveedor) => {
   try {
@@ -237,6 +238,41 @@ const actualizarProveedor = async (datos) => {
   }
 };
 
+//Actualizar comprobante de pago
+const datosComprobantePago = async (id_usuario,num_comprobante) => {
+  try {
+    const connection = await createDatabaseConnection(); // Obtiene la conexión desde el módulo
+    const sql =`SELECT *, 
+    (SELECT nombre FROM proveedores 
+      WHERE proveedores.id_proveedor = comprobantes_de_pago.id_proveedor  
+      AND id_usuario = ?) AS nombre_proveedor 
+    FROM comprobantes_de_pago  
+    WHERE id_usuario = ? AND num_comprobante = ?`;
+    const [rows, fields] = await connection.execute(sql, [id_usuario,id_usuario, num_comprobante]);
+    connection.end(); // Cierra la conexión cuando hayas terminado
+
+    return rows; // Retorna los resultados de la consulta
+  } catch (error) {
+    console.error("Error al ejecutar la consulta: " + error.message);
+    throw error; // Lanza el error para que pueda ser manejado en un nivel superior
+  }
+};
+
+const actualizarComprobantePago = async (datos) => {
+  try {
+    const connection = await createDatabaseConnection(); // Obtiene la conexión desde el módulo
+    const sql =`UPDATE comprobantes_de_pago SET descripcion_pago = ?, descripcion_descuento = ?,
+    valor_descuento = ?, valor_bruto = ?, valor_neto = ? WHERE num_comprobante = ? AND id_usuario = ?`;
+    await connection.execute(sql, datos);
+    connection.end(); // Cierra la conexión cuando hayas terminado
+
+    return true; // Retorna los resultados de la consulta
+  } catch (error) {
+    console.error("Error al ejecutar la consulta: " + error.message);
+    throw error; // Lanza el error para que pueda ser manejado en un nivel superior
+  }
+};
+
 module.exports = {
   listaProveedores,
   listaComprobantesDePago,
@@ -250,5 +286,7 @@ module.exports = {
   ultimoCompPago,
   crearCompPago,
   datosProveedor,
-  actualizarProveedor
+  actualizarProveedor,
+  datosComprobantePago,
+  actualizarComprobantePago,
 };
