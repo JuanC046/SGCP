@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comprobante de Pago</title>
+  </head>
+  <body id="body-comprobantePago">
+    <h2 id="h2-CP">COMPROBANTE DE PAGO</h2>
+    <h3 id="h3-CP">{{datos.nombre_usuario}}</h3>
+    <div id="wrapper-cp">
+      <div id="wrapper-fecha">
+        <label for="fecha" id="label-fecha">FECHA</label>
+        <p id="fecha">{{datos.fecha}}</p>
+      </div>
+      <div id="wrapper-nComprobante">
+        <label for="nComprobante" id="label-nComprobante">N° COMPROBANTE</label>
+        <p id="nComprobante">{{datos.num_comprobante}}</p>
+      </div>
+      <div id="wrapper-pagadoA">
+        <label for="pagadoA" id="label-pagadoA">PAGADO A</label>
+        <p id="pagadoA">{{datos.nombre_proveedor}}</p>
+      </div>
+      <div id="wrapper-descripcionPago">
+        <label for="descripcionPago" id="label-descripcionPago"
+          >DESCRIPCIÓN DEL PAGO</label
+        >
+        <p id="descripcionPago">{{datos.descripcion_pago}}</p>
+      </div>
+      <label for="descuento" id="label-descuento">DESCUENTO</label>
+      <div id="wrapper-descripcionDescuento">
+        <label for="descripcionDescuento" id="label-descripcionDescuento"
+          >DESCRIPCIÓN</label
+        >
+        <p id="descripcionDescuento">{{datos.descripcion_descuento}}</p>
+      </div>
+      <div id="wrapper-valorDescuento">
+        <label for="valorDescuento" id="label-valorDescuento">VALOR</label>
+        <p id="valorDescuento">{{datos.valor_descuento}}</p>
+      </div>
+      <div id="wrapper-valorBruto">
+        <label for="valorBruto" id="label-valorBruto">VALOR BRUTO</label>
+        <p id="valorBruto">{{datos.valor_bruto}}</p>
+      </div>
+      <div id="wrapper-valorNeto">
+        <label for="valorNeto" id="label-valorNeto">VALOR NETO</label>
+        <p id="valorNeto">{{datos.valor_neto}}</p>
+      </div>
+    </div>
+  </body>
+  <style>
+    :root {
+      --strong: #eb8b17;
+      --transparent: rgba(255, 255, 255, 0.1);
+      --border: #ffffff;
+      --links: #6da5c0;
+      --button: #0c7075;
+      --background: #ffffff;
+      --letter: #000000;
+    }
+
+    * {
+      margin: 0%;
+      padding: 0%;
+      color: var(--letter);
+      overflow-anchor: none;
+      font-family: sans-serif;
+
+    }
+
+    body {
+      background-color: var(--background);
+    }
+
+    h1 {
+      margin-top: 10px;
+      font-size: 30px;
+      font-weight: bolder;
+    }
+    h2 {
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: bolder;
+    }
+    h3 {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: bolder;
+    }
+    /* Resetear los márgenes y el relleno del cuerpo y establecer un fondo */
+    #body-comprobantePago {
+      margin: 10px;
+      padding: 10px;
+      display: inline;
+      inset-inline-start: initial;
+    }
+
+    /* Estilos para el encabezado "COMPROBANTE DE PAGO" */
+    #h2-CP {
+      text-align: left;
+      margin-top: 10px;
+      margin-left: 20px;
+    }
+
+    /* Estilos para el nombre de usuario */
+    #h3-CP {
+      text-align: left;
+      margin-top: 7px; /* Ajusta el margen superior según sea necesario */
+      margin-left: 20px;
+    }
+
+    /* Estilos para el contenedor principal */
+    #wrapper-cp {
+      display: grid;
+      grid-template-columns: 3;
+      gap: 10px;
+      grid-template-rows: repeat(4, 80px);
+      border-radius: 5px;
+      padding: 20px;
+      margin-top: 0px; /* Centrar el contenedor horizontalmente y agregar margen superior */
+    }
+
+    /* Estilos para las etiquetas y campos de entrada */
+    label {
+      display: block;
+      text-align: center;
+      margin-top: 22px; /* Espacio entre las etiquetas y los campos de entrada */
+      margin-bottom: 0px;
+      font-weight: bolder; /* Hacer que las etiquetas sean más visibles */
+    }
+
+    #fecha,
+    #nComprobante,
+    #valorDescuento,
+    #valorBruto,
+    #valorNeto {
+      padding: 10px;
+      margin: 5px 0;
+      text-align: left;
+    }
+    #pagadoA {
+      width: 70%;
+      height: 10%;
+      padding: 10px;
+      text-align: left;
+      border-radius: 5px;
+    }
+    #descripcionPago,
+    #descripcionDescuento {
+      padding: 10px;
+      text-align: left;
+      border-radius: 5px;
+    }
+
+    #wrapper-fecha {
+      display: flex;
+      flex-direction: row;
+      grid-column: 1;
+      grid-row: 1;
+      #label-fecha {
+        text-align: left;
+        margin-left: 20px;
+        margin-right: 30px;
+      }
+      #fecha {
+        width: 30%;
+        height: 10px;
+        margin-left: 15px;
+        margin-top: 12px;
+        margin-right: 10px;
+      }
+    }
+    #wrapper-nComprobante {
+      display: flex;
+      flex-direction: row;
+      grid-column: 2;
+      grid-row: 1;
+      #label-nComprobante {
+        text-align: left;
+        margin-left: 20px;
+        margin-right: 30px;
+      }
+      #nComprobante {
+        width: 30%;
+        height: 8px;
+        margin-top: 12px;
+        margin-right: 10px;
+      }
+    }
+    #wrapper-pagadoA {
+      display: flex;
+      flex-direction: row;
+      grid-column: 1;
+      grid-row: 2;
+      #label-pagadoA {
+        text-align: left;
+        margin-top: 5px;
+        margin-right: 30px;
+        margin-left: 15px;
+      }
+      #pagadoA {
+        width: 60%;
+        height: 10px;
+        margin-top: 0px;
+        margin-right: 10px;
+      }
+    }
+    #wrapper-descripcionPago {
+      display: flex;
+      flex-direction: column;
+      grid-column: 1;
+      grid-row: 3;
+      #label-descripcionPago {
+        margin-top: 0px;
+        text-align: left;
+        margin-left: 15px;
+        margin-right: 30px;
+      }
+      #descripcionPago {
+        width: 85%;
+        height: 200px;
+        margin-left: 15px;
+        margin-right: 10px;
+      }
+    }
+    #label-descuento {
+      grid-column: 2;
+      grid-row: 2;
+      text-align: center;
+      margin-top: 30px;
+      margin-left: 100px;
+    }
+    #wrapper-descripcionDescuento {
+      display: flex;
+      flex-direction: column;
+      grid-column: 2;
+      grid-row: 3/4;
+      #label-descripcionDescuento {
+        text-align: left;
+        margin-top: 0px;
+        margin-right: 30px;
+      }
+      #descripcionDescuento {
+        width: 50%;
+        height: auto;
+        margin-left: 20px;
+        margin-right: 10px;
+      }
+    }
+    #wrapper-valorDescuento {
+      display: flex;
+      flex-direction: column;
+      grid-column: 3;
+      grid-row: 3/4;
+      #label-valorDescuento {
+        text-align: left;
+        margin-top: 0px;
+        margin-left: 0px;
+      }
+      #valorDescuento {
+        margin-left: 0px;
+        width: 30%;
+        height: 10px;
+      }
+    }
+    #wrapper-valorBruto {
+      display: flex;
+      flex-direction: row;
+      grid-column: 1;
+      grid-row: 4;
+      #label-valorBruto {
+        text-align: center;
+        margin-top: 30px;
+        margin-left: 15px;
+      }
+      #valorBruto {
+        width: 30%;
+        height: 10px;
+        margin-top: 20px;
+        margin-left: 30px;
+      }
+    }
+    #wrapper-valorNeto {
+      display: flex;
+      flex-direction: row;
+      grid-column: 2;
+      grid-row: 4;
+      #label-valorNeto {
+        text-align: center;
+        margin-top: 30px;
+        margin-left: 15px;
+      }
+      #valorNeto {
+        width: 30%;
+        height: 10px;
+        margin-top: 20px;
+        margin-left: 30px;
+      }
+    }
+
+    /* Estilos para los enlaces */
+    a {
+      text-decoration: none; /* Evitar subrayado en los enlaces */
+    }
+  </style>
+</html>
