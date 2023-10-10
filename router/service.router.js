@@ -22,7 +22,8 @@ const {
     eliminarProveedor,
     eliminarComprobantePago,
     leerUsuario,
-    escribirUsuario
+    escribirUsuario,
+    borrarUsuario
 } = require('../service/data.service');
 
 router.use(bodyParser.json());
@@ -391,4 +392,8 @@ router.delete("/eliminar/ComprobantePago", async (req,res) =>{
           
 });
 
+router.delete("/cerrar/sesion", async (req, res) => {
+  borrarUsuario()
+  res.status(200).json({ message: 'Sesión cerrada con éxito'});
+});
 module.exports = router;
