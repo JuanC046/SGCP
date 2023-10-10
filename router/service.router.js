@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const path = require("path");
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const { 
     listaProveedores, 
@@ -19,9 +20,12 @@ const {
     datosComprobantePago,
     actualizarComprobantePago,
     eliminarProveedor,
-    eliminarComprobantePago
+    eliminarComprobantePago,
+    leerUsuario,
+    escribirUsuario
 } = require('../service/data.service');
 
+router.use(bodyParser.json());
 router.use(express.json());
 
 //Renders -----------------------------------------------------
@@ -58,7 +62,41 @@ router.get("/menu",(req,res) =>{
 router.get("/proveedor",(req,res) =>{
     res.render("proveedor");
 });
+
+router.get("/obtener/usuario",(req,res) =>{
+  const usuario = leerUsuario();
+  console.log(usuario);
+  res.status(200).json({ usuarioDatos : usuario});
+});
 //-----------------------------------------------------
+
+router.post("/ingreso/usuario", async (req, res) => {
+  const id_usuario = req.body.id_usuario;
+  const password = req.body.password;
+  console.log(req.body)
+  existeUsuario(id_usuario)
+    .then((result) => {
+      console.log('Resultado de la consulta:', result);
+      if (result.length === 0) { // No existe el usuario
+          console.log('El usuario no está registrado');
+          res.status(400).json({ message: 'El usuario no está registrado' });
+        } else if (result[0].contrasena === password){
+          console.log('Ingreso exitoso');
+          result[0].contrasena = null;
+          const userData = result[0];
+          const datosUsuario = {
+            "nombreUsuario":(userData.nombre + " " + (userData.segundo_nombre === null ? "": userData.segundo_nombre) + " " + userData.apellido + " " + (userData.segundo_apellido === null ? "": userData.segundo_apellido)).toUpperCase(),
+            "id_usuario": userData.id_usuario,
+          }
+          escribirUsuario(datosUsuario)
+          res.status(200).json({ message: 'Ingreso exitoso'});
+        }
+    })
+    .catch((error) => {
+      console.error('Error en la consulta:', error);
+      res.status(400).json({ error: 'Error en la consulta' });
+    });
+});
 
 router.post("/registro/usuario", async (req, res) => {
     const id_usuario = req.body.id_usuario;

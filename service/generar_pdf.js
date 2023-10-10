@@ -34,3 +34,11 @@ const generarPdf = async () => {
 module.exports = {
   generarPdf,
 };
+
+
+/*generarPdfButton.addEventListener("click", () => {
+    fetch("/generar_pdf")
+        .then(response => response.text())
+        .then(message => console.log(message))
+        .catch(error => console.error(error));
+});*/

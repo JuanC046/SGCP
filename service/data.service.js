@@ -1,38 +1,32 @@
 const { createDatabaseConnection } = require("../config/database.conection");
 
+const fs = require("fs");
+const path = require("path");
+
+//Manejo de sesion
+// Ruta al archivo JSON de usuarios
+const usuarioFilePath = path.join(__dirname, "usuario.json");
+
+// Leer los datos de usuario desde el archivo JSON
+const leerUsuario = () => {
+  const usuarioData = fs.readFileSync(usuarioFilePath, "utf-8");
+  return JSON.parse(usuarioData);
+}
+
+// Escribir los datos de usuario en el archivo JSON
+const escribirUsuario = (usuario) => {
+  const usuarioData = JSON.stringify(usuario);
+  fs.writeFileSync(usuarioFilePath, usuarioData);
+}
+
+const borrarUsuario = () => {
+  const usuarioData = JSON.stringify({});
+  fs.writeFileSync(usuarioFilePath, usuarioData);
+}
 // Ejemplo consultas
-const ejemplo = () => {
-  const id_usuario = 1; // Supongamos que este valor proviene de alguna entrada del usuario
-
-  const sql = "SELECT * FROM usuarios WHERE id = ?";
-  connection.query(sql, [id_usuario], (err, results) => {
-    if (err) {
-      console.error("Error al ejecutar la consulta: " + err.message);
-      return;
-    }
-
-    // Procesa los resultados de la consulta
-    console.log("Resultado de la consulta:", results);
-  });
-};
 
 //----------------------------------------------------------
-/*
-const listaProveedores = (id_usuario) => {
-    const sql = 'SELECT * FROM proveedor WHERE id_usuario = ?';
-    results = connection.query(sql, [id_usuario], (err, results) => {
-    if (err) {
-        console.error('Error al ejecutar la consulta: ' + err.message);
-        return;
-    }
-    // Procesa los resultados de la consulta
-    //console.log('Resultado de la consulta:', results);
-    console.log(typeof results);
-    return results;
-    });
-    return results;
-}
-*/
+
 
 //Registro usuario
 const existeUsuario = async (id_usuario) => {
@@ -329,4 +323,8 @@ module.exports = {
   actualizarComprobantePago,
   eliminarProveedor,
   eliminarComprobantePago,
+  leerUsuario,
+  escribirUsuario,
+  borrarUsuario,
+
 };
