@@ -1,43 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/css/main.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style/css/main.css" />
     <title>Registro/SGCP</title>
-</head>
-<body id="body-registro">
+  </head>
+  <body id="body-registro">
     <h1>SISTEMA DE GESTIÓN DE COMPROBANTES DE PAGO</h1>
     <h3>CREAR MI CUENTA</h3>
     <label for="nombre">NOMBRE</label>
-    <input type="text" name="nombre" id="nombre">
+    <input type="text" name="nombre" id="nombre" />
     <label for="segundoNombre">SEGUNDO NOMBRE</label>
-    <input type="text" name="segundoNombre" id="segundoNombre">
+    <input type="text" name="segundoNombre" id="segundoNombre" />
     <label for="apellido">APELLIDO</label>
-    <input type="text" name="apellido" id="apellido">
+    <input type="text" name="apellido" id="apellido" />
     <label for="segundoApellido">SEGUNDO APELLIDO</label>
-    <input type="text" name="segundoApellido" id="segundoApellido">
+    <input type="text" name="segundoApellido" id="segundoApellido" />
     <label for="tipoDocumento">TIPO DE DOCUMENTO</label>
     <select name="tipoDocumento" id="tipoDocumento">
-        <option value="nit" id="tipoDocumento_nit" selected>NIT</option>
-        <option value="cedula" id="tipoDocumento_cedula">CC</option>
+      <option value="nit" id="tipoDocumento_nit" selected>NIT</option>
+      <option value="cc" id="tipoDocumento_cedula">CC</option>
     </select>
     <label for="numeroDocumento">NUMERO DE DOCUMENTO</label>
-    <input type="text" name="numeroDocumento" id="numeroDocumento">
+    <input type="text" name="numeroDocumento" id="numeroDocumento" />
     <label for="newContrasena">CONTRASEÑA</label>
-    <input type="password" name="newContrasena" id="newContrasena">
-    <label for="confirmContrasena">CONFIRMAR CONTRASEÑA</label>
-    <input type="password" name="confirmContrasena" id="confirmContrasena">
-    
+    <input type="password" name="newContrasena" id="newContrasena" />
+    <label for="confirmarContrasena">CONFIRMAR CONTRASEÑA</label>
+    <input type="password" name="confirmContrasena" id="confirmContrasena" />
     <div id="wrapper-options-registrarse">
-        <a href="">
-            <button id="buttonRegistrarse2" class ="buttonC1">REGISTRARSE</button>
-        </a>
-        <a href="/sgcp/v1/" id="a-buttonRegresar2">
-            <button id="buttonRegresar2" class="buttonC1">REGRESAR</button>
-        </a>
-        
-    </div> 
-    
-</body>
+      <a id="a-buttonRegistrarse2">
+        <button id="buttonRegistrarse2" class="buttonC1">REGISTRARSE</button>
+      </a>
+      <a href="/sgcp/v1/" id="a-buttonRegresar2">
+        <button id="buttonRegresar2" class="buttonC1">REGRESAR</button>
+      </a>
+    </div>
+  </body>
+  <script type="module" src="/script/registro.js"></script>
 </html>

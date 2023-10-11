@@ -101,14 +101,14 @@ router.post("/ingreso/usuario", async (req, res) => {
 
 router.post("/registro/usuario", async (req, res) => {
     const id_usuario = req.body.id_usuario;
-  
+    console.log(id_usuario);
     existeUsuario(id_usuario)
       .then((result) => {
         console.log('Resultado de la consulta:', result);
         if (result.length === 0) { // No existe el usuario
           const datos = [
             req.body.id_usuario,
-            req.body.password,
+            req.body.contrasena,
             req.body.nombre,
             req.body.segundo_nombre,
             req.body.apellido,
