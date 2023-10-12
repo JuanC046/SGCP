@@ -80,10 +80,9 @@ router.post("/ingreso/usuario", async (req, res) => {
       console.log('Resultado de la consulta:', result);
       if (result.length === 0) { // No existe el usuario
           console.log('El usuario no está registrado');
-          res.status(400).json({ message: 'El usuario no está registrado' });
+          res.status(400).json({ error: 'El usuario no está registrado' });
         } else if (result[0].contrasena === password){
           console.log('Ingreso exitoso');
-          result[0].contrasena = null;
           const userData = result[0];
           const datosUsuario = {
             "nombreUsuario":(userData.nombre + " " + (userData.segundo_nombre === null ? "": userData.segundo_nombre) + " " + userData.apellido + " " + (userData.segundo_apellido === null ? "": userData.segundo_apellido)).toUpperCase(),
@@ -91,6 +90,10 @@ router.post("/ingreso/usuario", async (req, res) => {
           }
           escribirUsuario(datosUsuario)
           res.status(200).json({ message: 'Ingreso exitoso'});
+        }
+        else {
+          console.log('La contraseña es incorrecta');
+          res.status(400).json({ error: 'La contraseña es incorrecta' });
         }
     })
     .catch((error) => {
@@ -141,7 +144,7 @@ router.post("/registro/usuario", async (req, res) => {
     existeProveedor(id_usuario, id_proveedor)
       .then((result) => {
         console.log('Resultado de la consulta:', result);
-        if (result.length === 0) { // No existe el proveedor
+        if (result.length == 0) { // No existe el proveedor
           const datos = [
             req.body.id_proveedor,
             req.body.nombre,
@@ -160,7 +163,7 @@ router.post("/registro/usuario", async (req, res) => {
             });
         } else {
           const mensaje = "El proveedor ya existe";
-          res.status(400).json({ error: mensaje });
+          res.status(400).json({ message: mensaje });
         }
       })
       .catch((error) => {
@@ -283,18 +286,18 @@ router.get("/obtener/por/fecha/listaComprobantesDePago", async (req,res) =>{
     
 });
 
-router.get("/obtener/Proveedor", async (req,res) =>{
+router.post("/obtener/Proveedor", async (req,res) =>{
   const id_usuario = req.body.id_usuario;
   const id_proveedor = req.body.id_proveedor;
   
   datosProveedor(id_usuario, id_proveedor)
       .then((result) => {
           console.log('Resultado de la consulta:', result);
-          res.status(200).json(result);
+          res.status(200).json(result[0]);
       })
       .catch((error) => {
           console.error('Error en la consulta:', error);
-          res.status(400);
+          res.status(400).json({ error: "Error al obtener los datos del proveedor" });
       });
   
 });
