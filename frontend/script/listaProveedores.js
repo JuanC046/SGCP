@@ -1,3 +1,14 @@
+window.addEventListener('load', function () {
+  // Verifica si la variable de recarga está configurada
+  if (localStorage.getItem('recargarPagina') === 'true') {
+    // Elimina la variable para que no se recargue la próxima vez
+    localStorage.removeItem('recargarPagina');
+
+    // Recarga la página
+    location.reload();
+  }
+});
+
 // Función para crear y agregar una fila al contenedor
 function agregarFila(datos) {
   const contenedor = document.getElementById("contenedor-filas");
@@ -59,6 +70,7 @@ function listarProveedores() {
       });
     });
 }
+
 listarProveedores();
 //----------------------------------------------------------------------
 const contenedorFilas = document.getElementById("contenedor-filas");

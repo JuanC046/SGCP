@@ -126,7 +126,10 @@ botonGuardar.addEventListener("click", () => {
 });
 
 botonRegresar.addEventListener("click", () => {
-  if (!estanHabilitadosInputs()) window.history.back();
+  if (!estanHabilitadosInputs()) {
+    localStorage.setItem('recargarPagina', 'true');
+    window.history.back(); 
+  }
   const nombreProveedor = nombre.value;
   const nit_ccProveedor = nit_cc.value;
   const ciudadProveedor = ciudad.value;
@@ -186,6 +189,7 @@ botonRegresar.addEventListener("click", () => {
               iguales = true;
             }
             if (iguales) {
+              localStorage.setItem('recargarPagina', 'true');
               window.history.back();
             } else {
               const confirm = window.confirm(
@@ -193,6 +197,7 @@ botonRegresar.addEventListener("click", () => {
               );
               if (confirm) {
                 //regresar a la anterior vista cargada
+                localStorage.setItem('recargarPagina', 'true');
                 window.history.back();
               }
             }
@@ -203,8 +208,9 @@ botonRegresar.addEventListener("click", () => {
             }
           })
       } else {
+        localStorage.setItem('recargarPagina', 'true');
         window.history.back();
-        //window.location.href = "/sgcp/v1/menu";
+        //window.location.href = "/sgcp/v1/listaProveedores";
       }
     });
   }
