@@ -6,7 +6,6 @@ const telefono = document.getElementById("telefono");
 const botonGuardar = document.getElementById("buttonGuardar");
 const botonRegresar = document.getElementById("buttonRegresar");
 
-
 botonGuardar.addEventListener("click", () => {
   const nombreProveedor = nombre.value;
   const nit_ccProveedor = nit_cc.value;
@@ -45,7 +44,7 @@ botonGuardar.addEventListener("click", () => {
           response.json().then((data) => {
             if (data.message === "El proveedor ya existe") {
               // Manejar el error "Proveedor ya existe"
-              window.alert("El proveedor ya existe");
+              window.alert("Ya hay un registro relacionado");
               console.error("Proveedor ya existe:", data.error);
             } else {
               // Manejar otro tipo de error 400
@@ -82,7 +81,7 @@ botonRegresar.addEventListener("click", () => {
     telefonoProveedor !== ""
   ) {
     console.log("Estoy en el if ");
-    fetch("/sgcp/v1/obtener/Proveedor", {
+    fetch("/sgcp/v1/set/proveedor", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -94,37 +93,53 @@ botonRegresar.addEventListener("click", () => {
     })
       .then((response) => {
         if (response.ok) {
-          // Respuesta exitosa (código 2xx)
-          return response.json(); // Parsear la respuesta JSON
-        } else {
-          // Otro error
-          return Promise.reject("Error desconocido");
-        }
-      })
-      .then((data) => {
-        // Manejar la respuesta exitosa
-        console.log("Datos del proveedor:", data);
-        // Puedes hacer lo que desees con los datos, por ejemplo, mostrarlos en tu página web.
-        if (data.id_proveedor == nit_ccProveedor) {
-          const confirm = window.confirm(
-            "Ya has hecho el registro\nQuieres regresar?"
-          );
-          if (confirm) {
-            window.history.back();
-          }
-        } else {
+          fetch("/sgcp/v1/obtener/Proveedor", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            mode: "cors",
+          })
+            .then((response) => {
+              if (response.ok) {
+                // Respuesta exitosa (código 2xx)
+                return response.json(); // Parsear la respuesta JSON
+              } else {
+                // Otro error
+                return Promise.reject("Error desconocido");
+              }
+            })
+            .then((data) => {
+              // Manejar la respuesta exitosa
+              console.log("Datos del proveedor:", data);
+              // Puedes hacer lo que desees con los datos, por ejemplo, mostrarlos en tu página web.
+              if (data.id_proveedor == nit_ccProveedor) {
+                const confirm = window.confirm(
+                  "Ya existe un registro relacionado\nQuieres regresar?"
+                );
+                if (confirm) {
+                  window.history.back();
+                }
+              } else {
+              }
+            })
+            .catch((error) => {
+              if (error) {
+                const confirm = window.confirm(
+                  "No has hecho el registro\nQuieres regresar?"
+                );
+                if (confirm) {
+                  //regresar a la anterior vista cargada
+                  window.history.back();
+                }
+              } else window.alert("Algo salió mal");
+            });
         }
       })
       .catch((error) => {
-        if (error) {
-          const confirm = window.confirm(
-            "No has hecho el registro\nQuieres regresar?"
-          );
-          if (confirm) {
-            //regresar a la anterior vista cargada
-            window.history.back();
-          }
-        } else window.alert("Algo salió mal");
+        // Manejar errores
+        window.alert("Algo salió mal");
+        console.error("Error en la solicitud:", error);
       });
   } else {
     window.history.back();

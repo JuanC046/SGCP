@@ -225,7 +225,7 @@ const datosProveedor = async (id_usuario,id_proveedor) => {
 const actualizarProveedor = async (datos) => {
   try {
     const connection = await createDatabaseConnection(); // Obtiene la conexión desde el módulo
-    const sql =`UPDATE proveedores SET id_proveedor = ?, nombre = ?,
+    const sql =`UPDATE proveedores SET nombre = ?,
     ciudad = ?, telefono = ? WHERE id_proveedor = ? AND id_usuario = ?`;
     await connection.execute(sql, datos);
     connection.end(); // Cierra la conexión cuando hayas terminado

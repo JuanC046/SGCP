@@ -10,17 +10,18 @@
     <h1>SISTEMA DE GESTIÓN DE COMPROBANTES DE PAGO</h1>
     <h3>REGISTRO PROVEEDOR</h3>
     <label for="nombre">NOMBRE</label>
-    <input type="text" name="nombre" id="nombre">
+    <input type="text" name="nombre" id="nombre" class="inputHabilitar" disabled>
     <label for="nit-cc">NIT-CC</label>
-    <input type="text" name="nit-cc" id="nit-cc">
+    <input type="text" name="nit-cc" id="nit-cc" disabled>
     <label for="ciudad">CIUDAD</label>
-    <input type="text" name="ciudad" id="ciudad">
+    <input type="text" name="ciudad" id="ciudad" class="inputHabilitar" disabled>
     <label for="teleforno">TELEFONO</label>
-    <input type="text" name="telefono" id="telefono">
+    <input type="text" name="telefono" id="telefono" class="inputHabilitar" disabled>
     <div id="wrapper-options">
         <button id="buttonEditar" class="buttonC2">EDITAR</button>
-        <button id="buttonGuardar" class="buttonC2">GUARDAR</button>
+        <button id="buttonGuardar" class="buttonC2" disabled>GUARDAR</button>
         <button id="buttonRegresar" class="buttonC2">REGRESAR</button>
     </div> 
 </body>
+<script type="module" src="/script/editarProveedor.js"></script>
 </html>

@@ -349,11 +349,10 @@ router.get("/obtener/Proveedor", async (req, res) => {
 router.put("/actualizar/Proveedor", async (req, res) => {
   const id_usuario = leerUsuario().id_usuario;
   const datos = [
-    req.body.id_proveedor,
     req.body.nombre,
     req.body.ciudad,
     req.body.telefono,
-    req.bodyid_proveedor_antiguo,
+    req.body.id_proveedor,
     id_usuario,
   ];
   actualizarProveedor(datos)
