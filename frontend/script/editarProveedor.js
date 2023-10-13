@@ -54,6 +54,17 @@ function deshabilitarInputs() {
   });
 }
 
+function estanHabilitadosInputs() {
+  var inputs = document.querySelectorAll(".inputHabilitar");
+  var habilitados = true;
+  inputs.forEach(function (input) {
+    if (input.hasAttribute("disabled")) {
+      habilitados = false;
+    }
+  });
+  return habilitados;
+}
+
 botonEditar.addEventListener("click", () => {
   habilitarInputs();
   botonGuardar.removeAttribute("disabled");
@@ -61,6 +72,7 @@ botonEditar.addEventListener("click", () => {
 });
 
 botonGuardar.addEventListener("click", () => {
+  deshabilitarInputs();
   const nombreProveedor = nombre.value;
   const nit_ccProveedor = nit_cc.value;
   const ciudadProveedor = ciudad.value;
@@ -110,5 +122,90 @@ botonGuardar.addEventListener("click", () => {
         // Ocurrió algún error
         console.error("Error:", error);
       });
+  }
+});
+
+botonRegresar.addEventListener("click", () => {
+  if (!estanHabilitadosInputs()) window.history.back();
+  const nombreProveedor = nombre.value;
+  const nit_ccProveedor = nit_cc.value;
+  const ciudadProveedor = ciudad.value;
+  const telefonoProveedor = telefono.value;
+  console.log(
+    nombreProveedor,
+    nit_ccProveedor,
+    ciudadProveedor,
+    telefonoProveedor
+  );
+  if (
+    nombreProveedor !== "" &&
+    nit_ccProveedor !== "" &&
+    ciudadProveedor !== "" &&
+    telefonoProveedor !== ""
+  ) {
+    console.log("Estoy en el if ");
+    fetch("/sgcp/v1/set/proveedor", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+      body: JSON.stringify({
+        id_proveedor: nit_ccProveedor,
+      }),
+    }).then((response) => {
+      if (response.ok) {
+        fetch("/sgcp/v1/obtener/Proveedor", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          mode: "cors",
+        })
+          .then((response) => {
+            if (response.ok) {
+              // Respuesta exitosa (código 2xx)
+              return response.json(); // Parsear la respuesta JSON
+            } else {
+              // Otro error
+              return Promise.reject("Error desconocido");
+            }
+          })
+          .then((data) => {
+            // Manejar la respuesta exitosa
+            console.log("Datos del proveedor:", data);
+            // Puedes hacer lo que desees con los datos, por ejemplo, mostrarlos en tu página web.
+            //Comprobar que los elementos de data sean iguales a los de los inputs
+            let iguales = false;
+            if (
+              nombreProveedor === data.nombre &&
+              nit_ccProveedor === data.id_proveedor &&
+              ciudadProveedor === data.ciudad &&
+              telefonoProveedor === data.telefono
+            ) {
+              iguales = true;
+            }
+            if (iguales) {
+              window.history.back();
+            } else {
+              const confirm = window.confirm(
+                "No has guardado los cambios\nQuieres regresar?"
+              );
+              if (confirm) {
+                //regresar a la anterior vista cargada
+                window.history.back();
+              }
+            }
+          })
+          .catch((error) => {
+            if (error) {
+              window.alert("Algo salió mal");
+            }
+          })
+      } else {
+        window.history.back();
+        //window.location.href = "/sgcp/v1/menu";
+      }
+    });
   }
 });
