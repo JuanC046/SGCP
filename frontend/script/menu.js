@@ -2,7 +2,7 @@
 const nombreUsuario = document.getElementById("h3-nombreUsuario");
 const botonCerrarSesion = document.getElementById("cerrarSesion");
 
-let datosUsuario = {};
+let datosUsuario = null;
 
 await fetch("/sgcp/v1/obtener/usuario")
 .then((response) => {
@@ -13,11 +13,10 @@ await fetch("/sgcp/v1/obtener/usuario")
   })
   .then((data) => {
     // Aquí puedes acceder a los datos del usuario
-    datosUsuario = data.usuarioDatos;
-    console.log("Mensaje del servidor:", data.message);
-    //console.log("Datos del usuario:", datosUsuario);
+    datosUsuario = data;
+    console.log("Datos del usuario:", datosUsuario);
   })
-  nombreUsuario.textContent = datosUsuario.nombreUsuario
+  nombreUsuario.textContent = datosUsuario
 
 
 botonCerrarSesion.addEventListener("click", () => {

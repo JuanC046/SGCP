@@ -6,21 +6,6 @@ const telefono = document.getElementById("telefono");
 const botonGuardar = document.getElementById("buttonGuardar");
 const botonRegresar = document.getElementById("buttonRegresar");
 
-let datosUsuario = {};
-
-await fetch("/sgcp/v1/obtener/usuario")
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error("La solicitud no fue exitosa");
-    }
-    return response.json(); // Parsea la respuesta JSON
-  })
-  .then((data) => {
-    // Aquí puedes acceder a los datos del usuario
-    datosUsuario = data.usuarioDatos;
-    console.log("Mensaje del servidor:", data.message);
-    //console.log("Datos del usuario:", datosUsuario);
-  });
 
 botonGuardar.addEventListener("click", () => {
   const nombreProveedor = nombre.value;
@@ -46,7 +31,6 @@ botonGuardar.addEventListener("click", () => {
       },
       mode: "cors",
       body: JSON.stringify({
-        id_usuario: datosUsuario.id_usuario,
         nombre: nombreProveedor,
         id_proveedor: nit_ccProveedor,
         ciudad: ciudadProveedor,
@@ -105,7 +89,6 @@ botonRegresar.addEventListener("click", () => {
       },
       mode: "cors",
       body: JSON.stringify({
-        id_usuario: datosUsuario.id_usuario,
         id_proveedor: nit_ccProveedor,
       }),
     })
@@ -127,22 +110,24 @@ botonRegresar.addEventListener("click", () => {
             "Ya has hecho el registro\nQuieres regresar?"
           );
           if (confirm) {
-            window.location.href = "/sgcp/v1/menu";
+            window.history.back();
           }
         } else {
-          
         }
       })
       .catch((error) => {
-        if (error) {const confirm = window.confirm(
-          "No has hecho el registro\nQuieres regresar?"
-        );
-        if (confirm) {
-          window.location.href = "/sgcp/v1/menu";
-        }}
-        else window.alert("Algo salió mal");
+        if (error) {
+          const confirm = window.confirm(
+            "No has hecho el registro\nQuieres regresar?"
+          );
+          if (confirm) {
+            //regresar a la anterior vista cargada
+            window.history.back();
+          }
+        } else window.alert("Algo salió mal");
       });
   } else {
-    window.location.href = "/sgcp/v1/menu";
+    window.history.back();
+    //window.location.href = "/sgcp/v1/menu";
   }
 });

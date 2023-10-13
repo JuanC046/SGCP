@@ -20,10 +20,11 @@ nav {
 }
 
 #wrapper-titulosProv {
-    margin-left: 100px;
-    margin-right: 100px;
+    margin-left: 265px;
+    margin-right: 265px;
     display: flex;
     flex-direction: row;
+    text-align: center;
     justify-content: space-between;
 
 }
@@ -51,4 +52,32 @@ footer{
 
     }
 }
-
+#contenedor-filas{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 100px;
+    margin-right: 100px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;   
+}
+.row {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .column {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .row:hover {
+    background-color: #6DA5C0;
+  }
