@@ -3,7 +3,7 @@
     margin: 10px;
     padding: 10px;
     display: inline;
-    inset-inline-start:initial;
+    inset-inline-start: initial;
 }
 
 /* Estilos para el encabezado "COMPROBANTE DE PAGO" */
@@ -16,7 +16,8 @@
 /* Estilos para el nombre de usuario */
 #h3-CP {
     text-align: left;
-    margin-top: 7px; /* Ajusta el margen superior según sea necesario */
+    margin-top: 7px;
+    /* Ajusta el margen superior según sea necesario */
     margin-left: 20px;
 }
 
@@ -25,26 +26,29 @@
     display: grid;
     grid-template-columns: 3;
     gap: 10px;
-    grid-template-rows: repeat(4,80px);
+    grid-template-rows: repeat(4, 80px);
     border-radius: 5px;
     padding: 20px;
-    margin-top:  0px; /* Centrar el contenedor horizontalmente y agregar margen superior */
+    margin-top: 0px;
+    /* Centrar el contenedor horizontalmente y agregar margen superior */
 }
 
 /* Estilos para las etiquetas y campos de entrada */
 label {
     display: block;
     text-align: center;
-    margin-top: 20px; /* Espacio entre las etiquetas y los campos de entrada */
+    margin-top: 20px;
+    /* Espacio entre las etiquetas y los campos de entrada */
     margin-bottom: 20px;
-    font-weight: bold; /* Hacer que las etiquetas sean más visibles */
+    font-weight: bold;
+    /* Hacer que las etiquetas sean más visibles */
 }
 
 #fecha,
 #nComprobante,
 #valorDescuento,
 #valorBruto,
-#valorNeto{
+#valorNeto {
     padding: 10px;
     margin: 5px 0;
     background-color: var(--transparent);
@@ -52,7 +56,8 @@ label {
     border: 1px solid var(--border);
     border-radius: 5px;
 }
-#pagadoA {
+
+#seleccionPagadoA {
     width: 70%;
     height: 10%;
     padding: 10px;
@@ -61,8 +66,9 @@ label {
     border: 1px solid var(--border);
     border-radius: 5px;
 }
+
 #descripcionPago,
-#descripcionDescuento  {
+#descripcionDescuento {
     padding: 10px;
     background-color: var(--transparent);
     text-align: left;
@@ -76,12 +82,14 @@ label {
     flex-direction: row;
     grid-column: 1;
     grid-row: 1;
+
     #label-fecha {
         text-align: left;
         margin-left: 20px;
         margin-right: 30px;
     }
-    #fecha{
+
+    #fecha {
         width: 30%;
         height: 10px;
         margin-left: 15px;
@@ -89,59 +97,74 @@ label {
         margin-right: 10px;
     }
 }
+
 #wrapper-nComprobante {
     display: flex;
     flex-direction: row;
     grid-column: 2;
     grid-row: 1;
+
     #label-nComprobante {
         text-align: left;
-        margin-left: 20px;  
+        margin-left: 20px;
         margin-right: 30px;
     }
-    #nComprobante{
+
+    #nComprobante {
         width: 30%;
         height: 8px;
         margin-top: 12px;
         margin-right: 10px;
     }
 }
+
 #wrapper-pagadoA {
     display: flex;
     flex-direction: row;
     grid-column: 1;
     grid-row: 2;
+
     #label-pagadoA {
         text-align: left;
         margin-top: 5px;
         margin-right: 30px;
         margin-left: 15px;
     }
-    #pagadoA{
-        width: 60%;
-        height: 10px;
+
+    #pagadoA {
+        width: 5%;
+        height: 30px;
         margin-top: 0px;
         margin-right: 10px;
+        background-color: var(--transparent);
+        text-align: left;
+        border: 1px solid var(--border);
+        border-radius: 5px;
     }
 }
+
 #wrapper-descripcionPago {
     display: flex;
     flex-direction: column;
     grid-column: 1;
     grid-row: 3;
+
     #label-descripcionPago {
         margin-top: 0px;
         text-align: left;
         margin-left: 15px;
         margin-right: 30px;
     }
-    #descripcionPago{
+
+    #descripcionPago {
         width: 85%;
         height: 200px;
         margin-left: 15px;
         margin-right: 10px;
+        resize: none;
     }
 }
+
 #label-descuento {
     grid-column: 2;
     grid-row: 2;
@@ -149,67 +172,80 @@ label {
     margin-top: 30px;
     margin-left: 100px;
 }
+
 #wrapper-descripcionDescuento {
     display: flex;
     flex-direction: column;
     grid-column: 2;
     grid-row: 3/4;
+
     #label-descripcionDescuento {
         text-align: left;
         margin-top: 0px;
         margin-right: 30px;
     }
+
     #descripcionDescuento {
         width: 50%;
         height: auto;
         margin-left: 20px;
         margin-right: 10px;
+        resize: none;
     }
 }
+
 #wrapper-valorDescuento {
     display: flex;
     flex-direction: column;
     grid-column: 3;
     grid-row: 3/4;
+
     #label-valorDescuento {
         text-align: left;
         margin-top: 0px;
         margin-left: 0px;
     }
-    #valorDescuento{
+
+    #valorDescuento {
         margin-left: 0px;
         width: 30%;
         height: 10px;
     }
 }
+
 #wrapper-valorBruto {
     display: flex;
     flex-direction: row;
     grid-column: 1;
     grid-row: 4;
+
     #label-valorBruto {
         text-align: center;
         margin-top: 30px;
         margin-left: 15px;
     }
-    #valorBruto{
+
+    #valorBruto {
         width: 30%;
         height: 10px;
-        margin-top: 20px;   
+        margin-top: 20px;
         margin-left: 30px;
     }
 }
+
 #wrapper-valorNeto {
     display: flex;
     flex-direction: row;
     grid-column: 2;
     grid-row: 4;
+
     #label-valorNeto {
         text-align: center;
         margin-top: 30px;
         margin-left: 15px;
     }
-    #valorNeto{
+
+    #valorNeto {
         width: 30%;
         height: 10px;
         margin-top: 20px;
@@ -219,6 +255,26 @@ label {
 
 /* Estilos para los enlaces */
 a {
-    text-decoration: none; /* Evitar subrayado en los enlaces */
+    text-decoration: none;
+    /* Evitar subrayado en los enlaces */
 }
 
+/* Agregar un hover a los option del select */
+option:hover {
+    background-color: var(--hover);
+}
+
+/* Agregar fondo a los option */
+option {
+    background-color: var(--background);
+}
+
+#seleccionProveedor {
+    width: 100%;
+    height: 10px;
+    margin-top: 0px;
+    margin-right: 10px;
+    background-color: var(--transparent);
+    border-color: var(--border);
+    border-radius: 5px;
+}

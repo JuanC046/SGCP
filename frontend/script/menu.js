@@ -5,7 +5,7 @@ const botonCerrarSesion = document.getElementById("cerrarSesion");
 let datosUsuario = null;
 
 await fetch("/sgcp/v1/obtener/usuario")
-.then((response) => {
+  .then((response) => {
     if (!response.ok) {
       throw new Error("La solicitud no fue exitosa");
     }
@@ -15,9 +15,8 @@ await fetch("/sgcp/v1/obtener/usuario")
     // Aquí puedes acceder a los datos del usuario
     datosUsuario = data;
     console.log("Datos del usuario:", datosUsuario);
-  })
-  nombreUsuario.textContent = datosUsuario
-
+  });
+nombreUsuario.textContent = datosUsuario;
 
 botonCerrarSesion.addEventListener("click", () => {
   fetch("/sgcp/v1/cerrar/sesion", {

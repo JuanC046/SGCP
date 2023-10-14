@@ -89,13 +89,13 @@ router.post("/set/proveedor", async (req, res) => {
 });
 
 router.post("/set/comprobantePago", async (req, res) => {
-  const num_comprobante = req.body.id_proveedor;
+  const num_comprobante = req.body.num_comprobante;
   console.log(req.body);
   const datosUsuario = leerUsuario();
   datosUsuario.num_comprobante = num_comprobante;
   try {
     escribirUsuario(datosUsuario);
-    res.status(200).json({ message: "Proveedor seteado con éxito" });
+    res.status(200).json({ message: "Comprobante seteado con éxito" });
   } catch {
     console.error("Error en la consulta:", error);
     res.status(400).json({ error: "Error en la consulta" });
@@ -237,7 +237,7 @@ router.get("/obtener/ultimo/comprobantePago", async (req, res) => {
   ultimoCompPago(id_usuario)
     .then((result) => {
       console.log("Resultado de la consulta:", result);
-      res.status(200).json(result);
+      res.status(200).json(result[0]);
     })
     .catch((error) => {
       console.error("Error en la consulta:", error);
