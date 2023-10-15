@@ -18,8 +18,8 @@ nav {
     margin-top: 0px;
 }
 #wrapper-titulosCP {
-    margin-left: 100px;
-    margin-right: 100px;
+    margin-left: 210px;
+    margin-right: 220px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -27,9 +27,48 @@ nav {
     padding: 10px;
 }
 
-ol {
-    margin-left: 100px;
+#wrapper-orden {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 0px;
+    #label-ordenado {
+        text-align: center;
+        margin-top: 0px;
+        margin-left: 10px;
+        margin-right: 20px;
+    }
+    #seleccionOrdenado{
+        width: 20%;
+        height: 20px;
+        margin-top: 0px;
+        margin-right: 5px;
+        background-color: var(--transparent);
+        border-color: var(--border);
+        border-radius: 5px;
+    }
+    #ordenado {
+        margin-left: 0px;
+        width: 2%;
+        height: 25px;
+        background-color: var(--transparent);
+        border-color: var(--border);
+        border-radius: 5px;
+    }
 }
+
+option:hover {
+    background-color: var(--hover);
+}
+
+/* Agregar fondo a los option */
+option {
+    color: var(--letter);
+    background-color: var(--background);
+}
+
 footer{
     grid-row: -1;
     display: flex;

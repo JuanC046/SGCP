@@ -15,32 +15,30 @@
         <h2>COMPROBANTES DE PAGO</h2>
         <a href="/sgcp/v1/comprobanteDePago">
           <button id="buttonCrear" class="buttonC2">CREAR</button>
-      </a>
+        </a>
       </nav>
     </header>
+    <div id="wrapper-orden">
+      <label for="ordenado" id="label-ordenado">ORDENADO POR</label>
+      <input type="text" id="seleccionOrdenado" disabled />
+      <select name="ordenado" id="ordenado">
+        <option value="" text="..."></option>
+        <option value="1" text="proveedor">Proveedor</option>
+        <option value="2" text="fecha">Fecha</option>
+      </select>
+    </div>
+
     <h4 id="wrapper-titulosCP">
-      <label for="nComprobante" id="label-nComprobante">N° COMPROBANTE</label>
+      <label for="nComprobante" id="label-nComprobante">N° COMP</label>
       <label for="fecha" id="label-fecha">FECHA</label>
       <label for="proveedor" id="label-proveedor">PROVEEDOR</label>
       <label for="valor" id="label-valor">VALOR</label>
     </h4>
-    <ol>
-      <p>Selecciona una opción:</p>
-      <input type="radio" id="opcion1" name="opcion" value="opcion1" />
-      <label for="opcion1">Opción 1</label
-      ><br />
-
-      <input type="radio" id="opcion2" name="opcion" value="opcion2" />
-      <label for="opcion2">Opción 2</label
-      ><br />
-
-      <input type="radio" id="opcion3" name="opcion" value="opcion3" />
-      <label for="opcion3">Opción 3</label
-      ><br />
-    </ol>
+    <div id="contenedor-filas"></div>
     <footer>
       <button id="buttonVer" class="buttonC2">VER</button>
       <button id="buttonEliminar" class="buttonC2">ELIMINAR</button>
     </footer>
   </body>
+  <script type="module" src="/script/listaComprobantesPago.js"></script>
 </html>

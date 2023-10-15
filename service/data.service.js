@@ -153,7 +153,7 @@ const listaComprobantesDePago = async (id_usuario) => {
   try {
     const connection = await createDatabaseConnection(); // Obtiene la conexión desde el módulo
     const sql = `SELECT comprobantes_de_pago.num_comprobante, comprobantes_de_pago.fecha, 
-    proveedores2.nombre AS Proveedor, comprobantes_de_pago.valor_neto 
+    proveedores2.nombre AS proveedor, comprobantes_de_pago.valor_neto 
     FROM comprobantes_de_pago 
     LEFT JOIN (SELECT * FROM proveedores WHERE id_usuario = ?) AS proveedores2 
     ON comprobantes_de_pago.id_proveedor = proveedores2.id_proveedor 
@@ -171,11 +171,11 @@ const listaComprobantesDePago_proveedor = async (id_usuario) => {
   try {
     const connection = await createDatabaseConnection(); // Obtiene la conexión desde el módulo
     const sql = `SELECT comprobantes_de_pago.num_comprobante, comprobantes_de_pago.fecha, 
-    proveedores2.nombre AS Proveedor, comprobantes_de_pago.valor_neto 
+    proveedores2.nombre AS proveedor, comprobantes_de_pago.valor_neto 
     FROM comprobantes_de_pago 
     LEFT JOIN (SELECT * FROM proveedores WHERE id_usuario = ?) AS proveedores2 
     ON comprobantes_de_pago.id_proveedor = proveedores2.id_proveedor 
-    WHERE comprobantes_de_pago.id_usuario = ? AND comprobantes_de_pago.eliminado != 1 ORDER BY proveedores2.id_proveedor`;
+    WHERE comprobantes_de_pago.id_usuario = ? AND comprobantes_de_pago.eliminado != 1 ORDER BY proveedores2.nombre`;
     const [rows, fields] = await connection.execute(sql, [id_usuario, id_usuario]);
     connection.end(); // Cierra la conexión cuando hayas terminado
 
@@ -190,7 +190,7 @@ const listaComprobantesDePago_fecha = async (id_usuario) => {
   try {
     const connection = await createDatabaseConnection(); // Obtiene la conexión desde el módulo
     const sql =`SELECT comprobantes_de_pago.num_comprobante, comprobantes_de_pago.fecha, 
-    proveedores2.nombre AS Proveedor, comprobantes_de_pago.valor_neto 
+    proveedores2.nombre AS proveedor, comprobantes_de_pago.valor_neto 
     FROM comprobantes_de_pago 
     LEFT JOIN (SELECT * FROM proveedores WHERE id_usuario = ?) AS proveedores2 
     ON comprobantes_de_pago.id_proveedor = proveedores2.id_proveedor 

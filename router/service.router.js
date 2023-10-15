@@ -68,6 +68,10 @@ router.get("/ver/proveedor", (req, res) => {
   res.render("editarProveedor");
 });
 
+router.get("/ver/comprobantePago",(req, res) => {
+  res.render("editarComprobantePago");
+});
+
 router.get("/obtener/usuario", (req, res) => {
   const usuario = leerUsuario();
   console.log(usuario);
