@@ -2,6 +2,7 @@ const router = require("express").Router();
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
+const fs = require("fs");
 
 const {
   listaProveedores,
@@ -24,7 +25,7 @@ const {
   leerUsuario,
   escribirUsuario,
   borrarUsuario,
-  eliminarPdfs
+  eliminarPdfs,
 } = require("../service/data.service");
 
 const { crearJson, generarPdf } = require("../service/generar_pdf");
@@ -455,6 +456,7 @@ router.get("/exportar/ComprobantePago", async (req, res) => {
   const id_usuario = leerUsuario().id_usuario;
   const num_comprobante = leerUsuario().num_comprobante;
   const nombre_usuario = leerUsuario().nombreUsuario;
+
   datosComprobantePago(id_usuario, num_comprobante)
     .then(async (result) => {
       console.log("Resultado de la consulta:", result);
@@ -465,29 +467,40 @@ router.get("/exportar/ComprobantePago", async (req, res) => {
         day: "numeric",
       });
       datos.nombre_usuario = nombre_usuario;
+
+      // Generar el PDF y guardar en una ubicación temporal
       crearJson(datos);
       console.log("Cree el JSON");
       try {
         generarPdf();
         console.log("PDF creado con éxito");
-        res.status(200).json({ message: "PDF creado con éxito" });
-      } catch {
-        (error) => {
-          console.error("Error en la consulta:", error);
-          res.status(400).json({ error: "Error al crear el PDF" });
-        };
+
+        const pdfPath = path.join(__dirname, `../comprobante_pago_n${num_comprobante}.pdf`); // Ruta al archivo PDF generado
+        
+        // Leer el archivo PDF
+        //const pdfStream = fs.createReadStream(pdfPath);
+
+        // Configurar las cabeceras de la respuesta HTTP para indicar que es un archivo PDF
+        //res.setHeader("Content-Disposition", `attachment; filename=comprobante_pago.pdf`);
+        //res.setHeader("Content-Type", "application/pdf");
+        res.sendFile(pdfPath);
+
+        // Enviar el archivo PDF como respuesta
+        //pdfStream.pipe(res);
+      } catch (error) {
+        console.error("Error en la generación del PDF:", error);
+        res.status(500).json({ error: "Error al crear el PDF" });
       }
     })
     .catch((error) => {
       console.error("Error en la consulta:", error);
-      res.status(400);
+      res.status(400).json({ error: "Error en la consulta de datos" });
     });
 });
 
 router.delete("/cerrar/sesion", async (req, res) => {
-  if(borrarUsuario() && eliminarPdfs() )
-  res.status(200).json({ message: "Sesión cerrada con éxito" });
-  else
-  res.status(400).json({ error: "Error al cerrar sesión" });
+  if (borrarUsuario() && eliminarPdfs())
+    res.status(200).json({ message: "Sesión cerrada con éxito" });
+  else res.status(400).json({ error: "Error al cerrar sesión" });
 });
 module.exports = router;

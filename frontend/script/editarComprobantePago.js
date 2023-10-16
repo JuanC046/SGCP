@@ -239,24 +239,33 @@ botonExportar.addEventListener("click", () => {
       })
         .then((response) => {
           if (response.ok) {
-            window.alert("Comprobante de pago exportado con éxito");
-          } else if (response.status === 400) {
-            response.json().then((data) => {
-              if (data.message === "El comprobante no se pudo exportar") {
-                // Manejar el error "Proveedor ya existe"
-                window.alert("El comprobante no se pudo exportar");
-                console.error("Proveedor ya existe:", data.error);
-              } else {
-                // Manejar otro tipo de error 400
-                console.error("Otro tipo de error:", data.error);
-              }
-            });
+            // Leer el cuerpo de la respuesta como un blob
+            return response.blob();
+          } else {
+            // Manejar errores de respuesta
+            throw new Error("Error en la solicitud");
           }
         })
+        .then((blob) => {
+          // Crear una URL del blob
+          const url = window.URL.createObjectURL(blob);
+      
+          // Crear un elemento <a> para descargar el archivo
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `comprobante_pago_n${data_num_comprobante}.pdf`; // Puedes establecer el nombre del archivo aquí
+          a.style.display = "none";
+      
+          // Agregar el elemento <a> al DOM y hacer clic en él para iniciar la descarga
+          document.body.appendChild(a);
+          a.click();
+      
+          // Limpiar y liberar recursos
+          window.URL.revokeObjectURL(url);
+        })
         .catch((error) => {
-          // Manejar errores
-          window.alert("Algo salió mal");
           console.error("Error en la solicitud:", error);
+          window.alert("Algo salió mal");
         });
     })
     .catch((error) => {
