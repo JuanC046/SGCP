@@ -31,6 +31,8 @@
           id="descripcionPago"
           cols="30"
           rows="10"
+          class="inputHabilitar"
+          disabled
         ></textarea>
       </div>
       <label for="descuento" id="label-descuento">DESCUENTO</label>
@@ -43,26 +45,29 @@
           id="descripcionDescuento"
           cols="30"
           rows="10"
+          class="inputHabilitar"
+          disabled
         ></textarea>
       </div>
       <div id="wrapper-valorDescuento">
         <label for="valorDescuento" id="label-valorDescuento">VALOR</label>
-        <input type="number" name="valorDescuento" id="valorDescuento" />
+        <input type="number" name="valorDescuento" id="valorDescuento" class="inputHabilitar" disabled/>
       </div>
       <div id="wrapper-valorBruto">
         <label for="valorBruto" id="label-valorBruto">VALOR BRUTO</label>
-        <input type="number" name="valorBruto" id="valorBruto" />
+        <input type="number" name="valorBruto" id="valorBruto" class="inputHabilitar" disabled/>
       </div>
       <div id="wrapper-valorNeto">
         <label for="valorNeto" id="label-valorNeto">VALOR NETO</label>
-        <input type="number" name="valorNeto" id="valorNeto" />
+        <input type="number" name="valorNeto" id="valorNeto" class="inputHabilitar" disabled/>
       </div>
     </div>
     <div id="wrapper-options">
       <button id="buttonEditar" class="buttonC2">EDITAR</button>
       <button id="buttonGuardar" class="buttonC2">GUARDAR</button>
-      <button id="buttonExportar" class="buttonC2">EXPORTAR</button>
-      <button id="buttonRegresar" class="buttonC2">REGRESAR</button>
+      <button id="buttonExportar" class="buttonC2" >EXPORTAR</button>
+      <button id="buttonRegresar" class="buttonC2" >REGRESAR</button>
     </div>  
   </body>
+  <script type="module" src="/script/editarComprobantePago.js"></script>
 </html>

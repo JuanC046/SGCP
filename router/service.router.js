@@ -378,7 +378,7 @@ router.get("/obtener/ComprobantePago", async (req, res) => {
   datosComprobantePago(id_usuario, num_comprobante)
     .then((result) => {
       console.log("Resultado de la consulta:", result);
-      res.status(200).json(result);
+      res.status(200).json(result[0]);
     })
     .catch((error) => {
       console.error("Error en la consulta:", error);
@@ -447,6 +447,8 @@ router.delete("/eliminar/ComprobantePago", async (req, res) => {
       res.status(400).json({ error: "Error al eliminar comprobante de pago" });
     });
 });
+
+router
 
 router.delete("/cerrar/sesion", async (req, res) => {
   borrarUsuario();
