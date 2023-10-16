@@ -9,7 +9,7 @@ function crearJson(data) {
 }
 
 // Datos del comprobante de pago
-let datosComprobante = {}
+let datosComprobante = {};
 //Funcion para traer los datos de un archivo json
 function traerDatos() {
   const fs = require("fs");
@@ -17,12 +17,11 @@ function traerDatos() {
   let datos = JSON.parse(rawdata);
   return datos;
 }
-datosComprobante = traerDatos();
-
-console.log(datosComprobante);
-// Crear un nuevo documento PDF
 
 function generarPdf() {
+  // Datos del comprobante de pago
+  datosComprobante = traerDatos();
+
   const doc = new PDFDocument();
 
   function drawLabelAndValue(label, value) {
@@ -34,7 +33,9 @@ function generarPdf() {
     doc.moveDown(0.5);
   }
   // Configurar el flujo de escritura para guardar el PDF en el servidor
-  const pdfStream = fs.createWriteStream("comprobante_pago.pdf");
+  const pdfStream = fs.createWriteStream(
+    `comprobante_pago_n${datosComprobante.num_comprobante}.pdf`
+  );
   doc.pipe(pdfStream);
 
   // Definir estilos de fuente
@@ -95,7 +96,9 @@ function generarPdf() {
   // Finalizar y cerrar el PDF
   doc.end();
 
-  console.log("PDF generado y guardado en comprobante_pago.pdf");
+  console.log(
+    `PDF creado y guardado en comprobante_pago_n${datosComprobante.num_comprobante}.pdf`
+  );
 }
 
 module.exports = { generarPdf, crearJson };

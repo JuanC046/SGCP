@@ -24,6 +24,7 @@ const {
   leerUsuario,
   escribirUsuario,
   borrarUsuario,
+  eliminarPdfs
 } = require("../service/data.service");
 
 const { crearJson, generarPdf } = require("../service/generar_pdf");
@@ -484,7 +485,9 @@ router.get("/exportar/ComprobantePago", async (req, res) => {
 });
 
 router.delete("/cerrar/sesion", async (req, res) => {
-  borrarUsuario();
+  if(borrarUsuario() && eliminarPdfs() )
   res.status(200).json({ message: "Sesión cerrada con éxito" });
+  else
+  res.status(400).json({ error: "Error al cerrar sesión" });
 });
 module.exports = router;

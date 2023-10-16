@@ -12,6 +12,9 @@ const botonGuardar = document.getElementById("buttonGuardar");
 const botonRegresar = document.getElementById("buttonRegresar");
 const botonExportar = document.getElementById("buttonExportar");
 const botonEditar = document.getElementById("buttonEditar");
+
+let puedorRegresar = true;
+
 let datosUsuario = null;
 
 await fetch("/sgcp/v1/obtener/usuario")
@@ -103,6 +106,7 @@ botonEditar.addEventListener("click", () => {
   habilitarInputs();
   botonGuardar.removeAttribute("disabled");
   botonExportar.style.display = "none";
+  puedorRegresar = false;
 });
 
 botonGuardar.addEventListener("click", () => {
@@ -176,6 +180,7 @@ botonGuardar.addEventListener("click", () => {
   } else {
     window.alert("Por favor ingrese todos los datos");
   }
+  puedorRegresar = true;
   deshabilitarInputs();
 });
 
@@ -199,89 +204,15 @@ botonRegresar.addEventListener("click", () => {
     data_valor_bruto,
     data_valor_neto
   );
-  if (
-    data_num_comprobante !== "" &&
-    data_fecha !== "" &&
-    data_pagado_a !== "" &&
-    data_descripcion_pago !== "" &&
-    data_valor_bruto !== "" &&
-    data_valor_neto !== ""
-  ) {
-    console.log("Estoy en el if ");
-    fetch("/sgcp/v1/set/comprobantePago", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      mode: "cors",
-      body: JSON.stringify({
-        num_comprobante: data_num_comprobante,
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          fetch("/sgcp/v1/obtener/ComprobantePago", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            mode: "cors",
-          })
-            .then((response) => {
-              if (response.ok) {
-                // Respuesta exitosa (código 2xx)
-                return response.json(); // Parsear la respuesta JSON
-              } else {
-                // Otro error
-                return Promise.reject("Error desconocido");
-              }
-            })
-            .then((data) => {
-              // Manejar la respuesta exitosa
-              console.log("Datos del proveedor:", data);
-              // Puedes hacer lo que desees con los datos, por ejemplo, mostrarlos en tu página web.
-              if (
-                (data.num_comprobante == data_num_comprobante,
-                data.fecha == data_fecha,
-                data.nombre_proveedor == data_pagado_a,
-                data.descripcion_pago == data_descripcion_pago,
-                data.descripcion_descuento == data_descripcion_descuento,
-                data.valor_descuento == data_valor_descuento,
-                data.valor_bruto == data_valor_bruto,
-                data.valor_neto == data_valor_neto)
-              )
-                window.history.back();
-              else {
-                const confirm = window.confirm(
-                  "No has guardado los cambios\nQuieres regresar?"
-                );
-                if (confirm) {
-                  //regresar a la anterior vista cargada
-                  window.history.back();
-                }
-              }
-            })
-            .catch((error) => {
-              if (error) {
-                const confirm = window.confirm(
-                  "No has guardado los cambios\nQuieres regresar?"
-                );
-                if (confirm) {
-                  //regresar a la anterior vista cargada
-                  window.history.back();
-                }
-              } else window.alert("Algo salió mal");
-            });
-        }
-      })
-      .catch((error) => {
-        // Manejar errores
-        window.alert("Algo salió mal");
-        console.error("Error en la solicitud:", error);
-      });
-  } else {
-    window.history.back();
-    //window.location.href = "/sgcp/v1/menu";
+  if (puedorRegresar) window.history.back();
+  else {
+    const confirm = window.confirm(
+      "No has guardado los cambios\nQuieres regresar?"
+    );
+    if (confirm) {
+      //regresar a la anterior vista cargada
+      window.history.back();
+    }
   }
 });
 
@@ -333,4 +264,4 @@ botonExportar.addEventListener("click", () => {
       window.alert("Algo salió mal");
       console.error("Error en la solicitud:", error);
     });
-}); 
+});
