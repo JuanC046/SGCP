@@ -43,7 +43,8 @@
 
       #wrapper-cp {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto auto auto;
         gap: 10px;
         border-radius: 5px;
         padding: 20px;
@@ -51,9 +52,7 @@
       }
 
       label {
-        display: block;
         text-align: left;
-        margin-top: 20px;
         font-weight: bold;
       }
 
@@ -65,22 +64,35 @@
         background-color: var(--background-color);
       }
 
-      #fecha,
-      #nComprobante,
-      #valorDescuento,
-      #valorBruto,
-      #valorNeto {
-        text-align: left;
+      #wrapper-fecha p,
+      #wrapper-nComprobante p,
+      #wrapper-valorDescuento p,
+      #wrapper-valorBruto p,
+      #wrapper-valorNeto p {
+        height: 20px; /* Altura más pequeña */
+        width: 200px;
+      }
+      #wrapper-pagadoA p {
+        width: 300px;
+      }
+
+      #wrapper-descripcionPago p {
+        height: 50px; /* Altura un poco más grande */
       }
 
       #pagadoA,
       #label-descuento,
       #descripcionDescuento,
-      #descripcionPago,
-      #valorDescuento {
-        border: 1px solid #ccc;
-        border-radius: 5px;
+      #valorBruto,
+      #valorNeto {
         background-color: var(--background-color);
+      }
+
+      /* Ancho personalizado para ciertas columnas */
+      #nComprobante,
+      #descripcionDescuento,
+      #valorDescuento {
+        grid-column: span 2;
       }
     </style>
   </head>
@@ -100,20 +112,17 @@
         <label id="pagadoA">PAGADO A</label>
         <p>{{datos.nombre_proveedor}}</p>
       </div>
-      <div id="wrapper-label-descuento">
-        <label id="label-descuento">DESCUENTO</label>
-      </div>
-      <div id="wrapper-descripcionDescuento">
-        <label id="descripcionDescuento">DESCRIPCIÓN</label>
-        <p>{{datos.descripcion_descuento}}</p>
-      </div>
-      <div id="wrapper-valorDescuento">
-        <label id="valorDescuento">VALOR</label>
-        <p>{{datos.valor_descuento}}</p>
-      </div>
       <div id="wrapper-descripcionPago">
         <label id="descripcionPago">DESCRIPCIÓN DEL PAGO</label>
         <p>{{datos.descripcion_pago}}</p>
+      </div>
+      <div id="wrapper-descripcionDescuento">
+        <label id="descripcionDescuento">DESCRIPCIÓN DESCUENTO</label>
+        <p>{{datos.descripcion_descuento}}</p>
+      </div>
+      <div id="wrapper-valorDescuento">
+        <label id="valorDescuento">VALOR DESCUENTO</label>
+        <p>{{datos.valor_descuento}}</p>
       </div>
       <div id="wrapper-valorBruto">
         <label id="valorBruto">VALOR BRUTO</label>

@@ -26,6 +26,8 @@ const {
   borrarUsuario,
 } = require("../service/data.service");
 
+const { crearJson, generarPdf } = require("../service/generar_pdf");
+
 router.use(bodyParser.json());
 router.use(express.json());
 
@@ -68,7 +70,7 @@ router.get("/ver/proveedor", (req, res) => {
   res.render("editarProveedor");
 });
 
-router.get("/ver/comprobantePago",(req, res) => {
+router.get("/ver/comprobantePago", (req, res) => {
   res.render("editarComprobantePago");
 });
 
@@ -448,7 +450,38 @@ router.delete("/eliminar/ComprobantePago", async (req, res) => {
     });
 });
 
-router
+router.get("/exportar/ComprobantePago", async (req, res) => {
+  const id_usuario = leerUsuario().id_usuario;
+  const num_comprobante = leerUsuario().num_comprobante;
+  const nombre_usuario = leerUsuario().nombreUsuario;
+  datosComprobantePago(id_usuario, num_comprobante)
+    .then(async (result) => {
+      console.log("Resultado de la consulta:", result);
+      const datos = result[0];
+      datos.fecha = new Date(datos.fecha).toLocaleDateString("es-ES", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+      });
+      datos.nombre_usuario = nombre_usuario;
+      crearJson(datos);
+      console.log("Cree el JSON");
+      try {
+        generarPdf();
+        console.log("PDF creado con éxito");
+        res.status(200).json({ message: "PDF creado con éxito" });
+      } catch {
+        (error) => {
+          console.error("Error en la consulta:", error);
+          res.status(400).json({ error: "Error al crear el PDF" });
+        };
+      }
+    })
+    .catch((error) => {
+      console.error("Error en la consulta:", error);
+      res.status(400);
+    });
+});
 
 router.delete("/cerrar/sesion", async (req, res) => {
   borrarUsuario();

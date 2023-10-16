@@ -29,12 +29,12 @@ await fetch("/sgcp/v1/obtener/usuario")
 nombreUsuario.textContent = datosUsuario;
 
 function formatearFecha(fecha) {
-    const date = new Date(fecha);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Ajusta el mes a dos dígitos
-    const day = String(date.getDate()).padStart(2, "0"); // Ajusta el día a dos dígitos
+  const date = new Date(fecha);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Ajusta el mes a dos dígitos
+  const day = String(date.getDate()).padStart(2, "0"); // Ajusta el día a dos dígitos
 
-    return `${year}-${month}-${day}`;
+  return `${year}-${month}-${day}`;
 }
 
 let datosComprobantePago = {};
@@ -102,8 +102,7 @@ function estanHabilitadosInputs() {
 botonEditar.addEventListener("click", () => {
   habilitarInputs();
   botonGuardar.removeAttribute("disabled");
-  botonEditar.setAttribute("disabled", "");
-  botonExportar.style.display = 'none';
+  botonExportar.style.display = "none";
 });
 
 botonGuardar.addEventListener("click", () => {
@@ -155,7 +154,7 @@ botonGuardar.addEventListener("click", () => {
       .then((response) => {
         if (response.ok) {
           window.alert("Comprobante de pago actualizado con éxito");
-          botonExportar.style.display = 'inline-block';
+          botonExportar.style.display = "inline-block";
         } else if (response.status === 400) {
           response.json().then((data) => {
             if (data.message === "El comprobante no se pudo actualizar") {
@@ -177,7 +176,7 @@ botonGuardar.addEventListener("click", () => {
   } else {
     window.alert("Por favor ingrese todos los datos");
   }
-  deshabilitarInputs()
+  deshabilitarInputs();
 });
 
 botonRegresar.addEventListener("click", () => {
@@ -286,34 +285,52 @@ botonRegresar.addEventListener("click", () => {
   }
 });
 
-botonExportar.addEventListener("click",() =>{
-    fetch("/sgcp/v1/exportar/ComprobantePago", {
+//------------------------------------------------
+botonExportar.addEventListener("click", () => {
+  const data_num_comprobante = nComprobante.value;
+  fetch("/sgcp/v1/set/comprobantePago", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    mode: "cors",
+    body: JSON.stringify({
+      num_comprobante: data_num_comprobante,
+    }),
+  })
+    .then(() => {
+      fetch("/sgcp/v1/exportar/ComprobantePago", {
         method: "GET",
         headers: {
-        "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         mode: "cors",
-    })
+      })
         .then((response) => {
-        if (response.ok) {
+          if (response.ok) {
             window.alert("Comprobante de pago exportado con éxito");
-        } else if (response.status === 400) {
+          } else if (response.status === 400) {
             response.json().then((data) => {
-            if (data.message === "El comprobante no se pudo exportar") {
+              if (data.message === "El comprobante no se pudo exportar") {
                 // Manejar el error "Proveedor ya existe"
                 window.alert("El comprobante no se pudo exportar");
                 console.error("Proveedor ya existe:", data.error);
-            } else {
+              } else {
                 // Manejar otro tipo de error 400
                 console.error("Otro tipo de error:", data.error);
-            }
+              }
             });
-        }
+          }
         })
         .catch((error) => {
-        // Manejar errores
-        window.alert("Algo salió mal");
-        console.error("Error en la solicitud:", error);
+          // Manejar errores
+          window.alert("Algo salió mal");
+          console.error("Error en la solicitud:", error);
         });
-
-})
+    })
+    .catch((error) => {
+      // Manejar errores
+      window.alert("Algo salió mal");
+      console.error("Error en la solicitud:", error);
+    });
+}); 
