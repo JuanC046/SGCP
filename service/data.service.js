@@ -349,6 +349,39 @@ const eliminarComprobantePago = async (id_usuario, id_proveedor) => {
   }
 };
 
+//Csv------------------------------------------------------
+const listaProveedoresCsv = async (id_usuario) => {
+  try {
+    const connection = await createDatabaseConnection(); // Obtiene la conexión desde el módulo
+    const sql = `SELECT id_proveedor, nombre, ciudad, telefono 
+    FROM proveedores WHERE id_usuario = ? AND eliminado != 1`;
+    const [rows, fields] = await connection.execute(sql, [id_usuario]);
+    connection.end(); // Cierra la conexión cuando hayas terminado
+
+    return rows; // Retorna los resultados de la consulta
+  } catch (error) {
+    console.error("Error al ejecutar la consulta: " + error.message);
+    throw error; // Lanza el error para que pueda ser manejado en un nivel superior
+  }
+};
+
+const listaComprobantesCsv = async (id_usuario) => {
+  try {
+    const connection = await createDatabaseConnection(); // Obtiene la conexión desde el módulo
+    const sql = `SELECT num_comprobante, id_proveedor, descripcion_pago, descripcion_descuento,
+    valor_descuento, valor_neto, valor_bruto 
+    FROM comprobantes_de_pago WHERE id_usuario = ? AND eliminado != 1`;
+    const [rows, fields] = await connection.execute(sql, [id_usuario]);
+    connection.end(); // Cierra la conexión cuando hayas terminado
+
+    return rows; // Retorna los resultados de la consulta
+  } catch (error) {
+    console.error("Error al ejecutar la consulta: " + error.message);
+    throw error; // Lanza el error para que pueda ser manejado en un nivel superior
+  }
+};
+
+
 module.exports = {
   listaProveedores,
   listaComprobantesDePago,
@@ -371,4 +404,6 @@ module.exports = {
   escribirUsuario,
   borrarUsuario,
   eliminarPdfs,
+  listaProveedoresCsv,
+  listaComprobantesCsv,
 };

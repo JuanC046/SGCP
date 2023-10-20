@@ -193,3 +193,33 @@ buttonEliminar.addEventListener("click", () => {
     });
   }
 });
+
+const botonExportar = document.getElementById("buttonExportar");
+
+botonExportar.addEventListener("click", () => {
+  // Realiza una solicitud al servidor para descargar el archivo CSV
+  fetch("/sgcp/v1/csv/proveedor")
+    .then((response) => {
+      if (response.ok) {
+        // Leer el cuerpo de la respuesta como un blob
+        return response.blob();
+      } else {
+        // Manejar errores de respuesta
+        throw new Error("Error en la solicitud");
+      }
+    })
+    .then((blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = "proveedores.csv";
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    })
+    .catch((error) => {
+      console.error("Error en la solicitud:", error);
+      window.alert("Algo salió mal");
+    });
+});

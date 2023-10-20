@@ -42,14 +42,19 @@ footer{
     #buttonVer{
         position: fixed;
         bottom: 50px;
-        left: 450px;
+        left: 300px;
 
     }
     #buttonEliminar{
         position: fixed;
         bottom: 50px;
-        right: 450px;
+        left: 550px;
 
+    }
+    #buttonExportar{
+        position: fixed;
+        bottom: 50px;
+        left: 800px;
     }
 }
 #contenedor-filas{
