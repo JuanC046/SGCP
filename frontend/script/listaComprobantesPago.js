@@ -58,10 +58,9 @@ function listarComprobantes() {
           if (data.message === "El usuario no existe") {
             // Manejar el error "Usuario no existe"
             window.alert("El usuario no existe");
-            console.error("Usuario no existe:", data.error);
           } else {
             // Manejar otro tipo de error 400
-            console.error("Otro tipo de error:", data.error);
+            window.alert("Algo salió mal");
           }
         });
       }
@@ -71,7 +70,6 @@ function listarComprobantes() {
       listaComprobantesDePago.forEach((item) => {
         item.fecha = formatearFecha(item.fecha);
       });
-      console.log("Lista de proveedores:", listaComprobantesDePago);
       listaComprobantesDePago.forEach((comprobante) => {
         const datosFila = [
           comprobante.num_comprobante,
@@ -96,7 +94,6 @@ const seleccionOrdenado = document.getElementById("seleccionOrdenado");
 ordenado.addEventListener("change", function () {
   const opcionSeleccionada = ordenado.options[ordenado.selectedIndex];
   const valorSeleccionado = opcionSeleccionada.textContent;
-  console.log(valorSeleccionado);
   seleccionOrdenado.value = valorSeleccionado;
   let listaComprobantesDePago = [];
 
@@ -115,9 +112,8 @@ ordenado.addEventListener("change", function () {
           response.json().then((data) => {
             if (data.message === "El usuario no existe") {
               window.alert("El usuario no existe");
-              console.error("Usuario no existe:", data.error);
             } else {
-              console.error("Otro tipo de error:", data.error);
+              window.alert("Algo salió mal");
             }
           });
         }
@@ -127,7 +123,6 @@ ordenado.addEventListener("change", function () {
         listaComprobantesDePago.forEach((item) => {
           item.fecha = formatearFecha(item.fecha);
         });
-        console.log("Lista de comprobantes:", listaComprobantesDePago);
         listaComprobantesDePago.forEach((comprobante) => {
           const datosFila = [
             comprobante.num_comprobante,
@@ -205,7 +200,6 @@ function obtenerContenidoFilaSeleccionada() {
 // Evento clic en el botón "VER"
 buttonVer.addEventListener("click", () => {
   const contenidoFilaSeleccionada = obtenerContenidoFilaSeleccionada();
-  console.log("Filas seleccionadas para eliminar:", contenidoFilaSeleccionada);
 
   fetch("/sgcp/v1/set/comprobantePago", {
     method: "POST",
@@ -224,10 +218,9 @@ buttonVer.addEventListener("click", () => {
         if (data.message === "El proveedor no existe") {
           // Manejar el error "Proveedor no existe"
           window.alert("El proveedor no existe");
-          console.error("Proveedor no existe:", data.error);
         } else {
           // Manejar otro tipo de error 400
-          console.error("Otro tipo de error:", data.error);
+          window.alert("Algo salió mal");
         }
       });
     }
@@ -237,7 +230,6 @@ buttonVer.addEventListener("click", () => {
 // Evento clic en el botón "ELIMINAR"
 buttonEliminar.addEventListener("click", () => {
   const contenidoFilaSeleccionada = obtenerContenidoFilaSeleccionada();
-  console.log("Filas seleccionadas para eliminar:", contenidoFilaSeleccionada);
 
   const confirm = window.confirm(
     `Esta seguro de eliminar el comprobante ${contenidoFilaSeleccionada[0]}?`
@@ -261,10 +253,9 @@ buttonEliminar.addEventListener("click", () => {
           if (data.message === "El comprobante de pago no existe") {
             // Manejar el error comprbante no existe"
             window.alert("El comprobante de pago no existe");
-            console.error("El comprobante no existe:", data.error);
           } else {
             // Manejar otro tipo de error 400
-            console.error("Otro tipo de error:", data.error);
+            window.alert("Algo salió mal");
           }
         });
       }
@@ -296,8 +287,7 @@ botonExportar.addEventListener("click", () => {
       a.click();
       window.URL.revokeObjectURL(url);
     })
-    .catch((error) => {
-      console.error("Error en la solicitud:", error);
+    .catch(() => {
       window.alert("Algo salió mal");
     });
 });

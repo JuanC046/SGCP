@@ -28,7 +28,6 @@ await fetch("/sgcp/v1/obtener/usuario")
   .then((data) => {
     // Aquí puedes acceder a los datos del usuario
     datosUsuario = data;
-    console.log("Datos del usuario:", datosUsuario);
   });
 nombreUsuario.textContent = datosUsuario;
 
@@ -57,26 +56,15 @@ await fetch("/sgcp/v1/obtener/ComprobantePago", {
         if (data.message === "El usuario no existe") {
           // Manejar el error "Usuario no existe"
           window.alert("El usuario no existe");
-          console.error("Usuario no existe:", data.error);
         } else {
           // Manejar otro tipo de error 400
-          console.error("Otro tipo de error:", data.error);
+          window.alert("Algo salió mal");
         }
       });
     }
   })
   .then((data) => {
     datosComprobantePago = data;
-    console.log("Comprobante de pago:", datosComprobantePago);
-    datosComprobantePago.fecha = formatearFecha(datosComprobantePago.fecha);
-    nComprobante.value = datosComprobantePago.num_comprobante;
-    fecha.value = datosComprobantePago.fecha;
-    pagadoA.value = datosComprobantePago.nombre_proveedor;
-    descripcionPago.value = datosComprobantePago.descripcion_pago;
-    descripcionDescuento.value = datosComprobantePago.descripcion_descuento;
-    valorDescuento.value = datosComprobantePago.valor_descuento;
-    valorBruto.value = datosComprobantePago.valor_bruto;
-    valorNeto.value = datosComprobantePago.valor_neto;
   });
 function habilitarInputs() {
   var inputs = document.querySelectorAll(".inputHabilitar");
@@ -120,16 +108,6 @@ botonGuardar.addEventListener("click", () => {
   const data_valor_bruto = valorBruto.value;
   const data_valor_neto = valorNeto.value;
 
-  console.log(
-    data_num_comprobante,
-    data_fecha,
-    data_pagado_a,
-    data_descripcion_pago,
-    data_descripcion_descuento,
-    data_valor_descuento,
-    data_valor_bruto,
-    data_valor_neto
-  );
   if (
     data_num_comprobante !== "" &&
     data_fecha !== "" &&
@@ -165,18 +143,16 @@ botonGuardar.addEventListener("click", () => {
             if (data.message === "El comprobante no se pudo actualizar") {
               // Manejar el error "Proveedor ya existe"
               window.alert("El comprobante no se pudo actualizar");
-              console.error("Proveedor ya existe:", data.error);
             } else {
               // Manejar otro tipo de error 400
-              console.error("Otro tipo de error:", data.error);
+              window.alert("Algo salió mal");
             }
           });
         }
       })
-      .catch((error) => {
+      .catch(() => {
         // Manejar errores
         window.alert("Algo salió mal");
-        console.error("Error en la solicitud:", error);
       });
   } else {
     window.alert("Por favor ingrese todos los datos");
@@ -187,25 +163,7 @@ botonGuardar.addEventListener("click", () => {
 });
 
 botonRegresar.addEventListener("click", () => {
-  const data_num_comprobante = nComprobante.value;
-  const data_fecha = fecha.value;
-  const data_pagado_a = pagadoA.value;
-  const data_descripcion_pago = descripcionPago.value;
-  const data_descripcion_descuento = descripcionDescuento.value;
-  const data_valor_descuento = valorDescuento.value;
-  const data_valor_bruto = valorBruto.value;
-  const data_valor_neto = valorNeto.value;
 
-  console.log(
-    data_num_comprobante,
-    data_fecha,
-    data_pagado_a,
-    data_descripcion_pago,
-    data_descripcion_descuento,
-    data_valor_descuento,
-    data_valor_bruto,
-    data_valor_neto
-  );
   if (puedorRegresar) window.history.back();
   else {
     const confirm = window.confirm(
@@ -266,14 +224,12 @@ botonExportar.addEventListener("click", async () => {
           window.URL.revokeObjectURL(url);
         })
         .catch((error) => {
-          console.error("Error en la solicitud:", error);
           window.alert("Algo salió mal");
         });
     })
     .catch((error) => {
       // Manejar errores
       window.alert("Algo salió mal");
-      console.error("Error en la solicitud:", error);
     });
 });
 

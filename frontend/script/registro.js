@@ -9,7 +9,6 @@ const confirmar_contrasena = document.getElementById("confirmContrasena");
 const botonRegistrarse = document.getElementById("buttonRegistrarse2");
 
 botonRegistrarse.addEventListener("click", () => {
-    console.log(contrasena.value,segundo_apellido.value.length, tipo_documento.value);
   const elementosFormulario = [
     nombre.value,
     apellido.value,
@@ -48,13 +47,11 @@ botonRegistrarse.addEventListener("click", () => {
           if (!response.ok) {
             throw new Error("La solicitud no fue exitosa");
           }
-          console.log("Mensaje del servidor:", response.message);
           window.alert("Registro exitoso");
           window.location.href = "/sgcp/v1/ingreso";
         })
         .catch((error) => {
           // Manejo de errores, por ejemplo, si la solicitud no pudo completarse
-          console.error(error);
           window.alert("No fue posible hacer el registro");
         });
     } else {

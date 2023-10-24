@@ -49,17 +49,15 @@ function listarProveedores() {
           if (data.message === "El usuario no existe") {
             // Manejar el error "Usuario no existe"
             window.alert("El usuario no existe");
-            console.error("Usuario no existe:", data.error);
           } else {
             // Manejar otro tipo de error 400
-            console.error("Otro tipo de error:", data.error);
+            window.alert("Algo salió mal");
           }
         });
       }
     })
     .then((data) => {
       listaProveedores = data;
-      console.log("Lista de proveedores:", listaProveedores);
       listaProveedores.forEach((proveedor) => {
         const datosFila = [
           proveedor.nombre,
@@ -125,7 +123,6 @@ function obtenerContenidoFilaSeleccionada() {
 // Evento clic en el botón "VER"
 buttonVer.addEventListener("click", () => {
     const contenidoFilaSeleccionada = obtenerContenidoFilaSeleccionada();
-    console.log("Filas seleccionadas para eliminar:", contenidoFilaSeleccionada);
 
     fetch("/sgcp/v1/set/proveedor",
     {
@@ -146,10 +143,9 @@ buttonVer.addEventListener("click", () => {
                 if (data.message === "El proveedor no existe") {
                     // Manejar el error "Proveedor no existe"
                     window.alert("El proveedor no existe");
-                    console.error("Proveedor no existe:", data.error);
                 } else {
                     // Manejar otro tipo de error 400
-                    console.error("Otro tipo de error:", data.error);
+                    window.alert("Algo salió mal");
                 }
             });
         }
@@ -160,7 +156,6 @@ buttonVer.addEventListener("click", () => {
 // Evento clic en el botón "ELIMINAR"
 buttonEliminar.addEventListener("click", () => {
   const contenidoFilaSeleccionada = obtenerContenidoFilaSeleccionada();
-  console.log("Filas seleccionadas para eliminar:", contenidoFilaSeleccionada);
 
   const confirm = window.confirm(
     `Esta seguro de eliminar el proveedor ${contenidoFilaSeleccionada[0]}?`);
@@ -183,10 +178,9 @@ buttonEliminar.addEventListener("click", () => {
           if (data.message === "El proveedor no existe") {
             // Manejar el error "Proveedor no existe"
             window.alert("El proveedor no existe");
-            console.error("Proveedor no existe:", data.error);
           } else {
             // Manejar otro tipo de error 400
-            console.error("Otro tipo de error:", data.error);
+            window.alert("Algo salió mal");
           }
         });
       }
@@ -218,8 +212,7 @@ botonExportar.addEventListener("click", () => {
       a.click();
       window.URL.revokeObjectURL(url);
     })
-    .catch((error) => {
-      console.error("Error en la solicitud:", error);
+    .catch(() => {
       window.alert("Algo salió mal");
     });
 });

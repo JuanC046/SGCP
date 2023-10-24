@@ -14,7 +14,6 @@ await fetch("/sgcp/v1/obtener/usuario")
   .then((data) => {
     // Aquí puedes acceder a los datos del usuario
     datosUsuario = data;
-    console.log("Datos del usuario:", datosUsuario);
   });
 nombreUsuario.textContent = datosUsuario;
 
@@ -35,8 +34,8 @@ botonCerrarSesion.addEventListener("click", () => {
     .then(() => {
       window.location.href = "/sgcp/v1/";
     })
-    .catch((error) => {
+    .catch(() => {
       // Manejo de errores, por ejemplo, si la solicitud no pudo completarse
-      console.error(error);
+      window.alert("Algo salió mal");
     });
 });

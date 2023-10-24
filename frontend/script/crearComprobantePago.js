@@ -25,7 +25,6 @@ await fetch("/sgcp/v1/obtener/usuario")
   .then((data) => {
     // Aquí puedes acceder a los datos del usuario
     datosUsuario = data;
-    console.log("Datos del usuario:", datosUsuario);
   });
 nombreUsuario.textContent = datosUsuario;
 
@@ -46,17 +45,15 @@ await fetch("/sgcp/v1/obtener/ultimo/comprobantePago",
         if (data.message === "El comprobante no existe") {
           // Manejar el error "Usuario no existe"
           window.alert("El comprobante no existe");
-          console.error("Comprobante no existe:", data.error);
         } else {
           // Manejar otro tipo de error 400
-          console.error("Otro tipo de error:", data.error);
+          window.alert("Algo salió mal");
         }
       })
     }
   })
   .then((data) => {
     numeroComprobante = data.num_ultimo_cp;
-    console.log("Comprobante:", numeroComprobante);
     nComprobante.value = numeroComprobante != null? numeroComprobante + 1 : 1 ;
   });
 
@@ -77,17 +74,15 @@ await fetch("/sgcp/v1/obtener/listaProveedores/comprobantePago",
         if (data.message === "El comprobante no existe") {
           // Manejar el error "Usuario no existe"
           window.alert("El comprobante no existe");
-          console.error("Comprobante no existe:", data.error);
         } else {
           // Manejar otro tipo de error 400
-          console.error("Otro tipo de error:", data.error);
+          window.alert("Algo salió mal");
         }
       })
     }
   })
   .then((data) => {
     listaProveedores = data;
-    console.log("Proveedores:", listaProveedores);
   });
 //crear una función que agrege las opciones de proveedores dentro el select pagadoA
 function agregarOpciones() {
@@ -117,17 +112,6 @@ botonGuardar.addEventListener("click", () => {
   const data_valor_descuento = valorDescuento.value;
   const data_valor_bruto = valorBruto.value;
   const data_valor_neto = valorNeto.value;
-
-  console.log(
-    data_num_comprobante,
-    data_fecha,
-    data_pagado_a,
-    data_descripcion_pago,
-    data_descripcion_descuento,
-    data_valor_descuento,
-    data_valor_bruto,
-    data_valor_neto
-  );
   if (
     data_num_comprobante !== "" &&
     data_fecha !== "" &&
@@ -190,16 +174,6 @@ botonRegresar.addEventListener("click", () => {
   const data_valor_bruto = valorBruto.value;
   const data_valor_neto = valorNeto.value;
 
-  console.log(
-    data_num_comprobante,
-    data_fecha,
-    data_pagado_a,
-    data_descripcion_pago,
-    data_descripcion_descuento,
-    data_valor_descuento,
-    data_valor_bruto,
-    data_valor_neto
-  );
   if (
     data_num_comprobante !== "" &&
     data_fecha !== "" &&
@@ -278,6 +252,5 @@ botonRegresar.addEventListener("click", () => {
       });
   } else {
     window.history.back();
-    //window.location.href = "/sgcp/v1/menu";
   }
 });

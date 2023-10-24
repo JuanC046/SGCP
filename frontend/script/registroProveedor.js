@@ -11,12 +11,6 @@ botonGuardar.addEventListener("click", () => {
   const nit_ccProveedor = nit_cc.value;
   const ciudadProveedor = ciudad.value;
   const telefonoProveedor = telefono.value;
-  console.log(
-    nombreProveedor,
-    nit_ccProveedor,
-    ciudadProveedor,
-    telefonoProveedor
-  );
   if (
     nombreProveedor !== "" &&
     nit_ccProveedor !== "" &&
@@ -45,18 +39,16 @@ botonGuardar.addEventListener("click", () => {
             if (data.message === "El proveedor ya existe") {
               // Manejar el error "Proveedor ya existe"
               window.alert("Ya hay un registro relacionado");
-              console.error("Proveedor ya existe:", data.error);
             } else {
               // Manejar otro tipo de error 400
-              console.error("Otro tipo de error:", data.error);
+              window.alert("Algo salió mal");
             }
           });
         }
       })
-      .catch((error) => {
+      .catch(() => {
         // Manejar errores
         window.alert("Algo salió mal");
-        console.error("Error en la solicitud:", error);
       });
   } else {
     window.alert("Por favor ingrese todos los datos");
@@ -68,19 +60,12 @@ botonRegresar.addEventListener("click", () => {
   const nit_ccProveedor = nit_cc.value;
   const ciudadProveedor = ciudad.value;
   const telefonoProveedor = telefono.value;
-  console.log(
-    nombreProveedor,
-    nit_ccProveedor,
-    ciudadProveedor,
-    telefonoProveedor
-  );
   if (
     nombreProveedor !== "" &&
     nit_ccProveedor !== "" &&
     ciudadProveedor !== "" &&
     telefonoProveedor !== ""
   ) {
-    console.log("Estoy en el if ");
     fetch("/sgcp/v1/set/proveedor", {
       method: "POST",
       headers: {
@@ -111,7 +96,6 @@ botonRegresar.addEventListener("click", () => {
             })
             .then((data) => {
               // Manejar la respuesta exitosa
-              console.log("Datos del proveedor:", data);
               // Puedes hacer lo que desees con los datos, por ejemplo, mostrarlos en tu página web.
               if (data.id_proveedor == nit_ccProveedor) {
                 const confirm = window.confirm(

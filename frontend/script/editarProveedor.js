@@ -23,17 +23,15 @@ fetch("/sgcp/v1/obtener/Proveedor", {
         if (data.message === "El usuario no existe") {
           // Manejar el error "Usuario no existe"
           window.alert("El usuario no existe");
-          console.error("Usuario no existe:", data.error);
         } else {
           // Manejar otro tipo de error 400
-          console.error("Otro tipo de error:", data.error);
+          window.alert("Algo salió mal");
         }
       });
     }
   })
   .then((data) => {
     datosProveedor = data;
-    console.log("Proveedor:", datosProveedor);
     nombre.value = datosProveedor.nombre;
     nit_cc.value = datosProveedor.id_proveedor;
     ciudad.value = datosProveedor.ciudad;
@@ -110,17 +108,16 @@ botonGuardar.addEventListener("click", () => {
             if (data.message === "El proveedor no existe") {
               // Manejar el error "Usuario no existe"
               window.alert("El proveedor no existe");
-              console.error("Proveedor no existe:", data.error);
             } else {
               // Manejar otro tipo de error 400
-              console.error("Otro tipo de error:", data.error);
+              window.alert("Algo salió mal");
             }
           });
         }
       })
       .catch((error) => {
         // Ocurrió algún error
-        console.error("Error:", error);
+        window.alert("Algo salió mal");
       });
   }
 });
@@ -134,12 +131,6 @@ botonRegresar.addEventListener("click", () => {
   const nit_ccProveedor = nit_cc.value;
   const ciudadProveedor = ciudad.value;
   const telefonoProveedor = telefono.value;
-  console.log(
-    nombreProveedor,
-    nit_ccProveedor,
-    ciudadProveedor,
-    telefonoProveedor
-  );
   if (
     nombreProveedor !== "" &&
     nit_ccProveedor !== "" &&
@@ -176,7 +167,6 @@ botonRegresar.addEventListener("click", () => {
           })
           .then((data) => {
             // Manejar la respuesta exitosa
-            console.log("Datos del proveedor:", data);
             // Puedes hacer lo que desees con los datos, por ejemplo, mostrarlos en tu página web.
             //Comprobar que los elementos de data sean iguales a los de los inputs
             let iguales = false;
@@ -210,7 +200,6 @@ botonRegresar.addEventListener("click", () => {
       } else {
         localStorage.setItem('recargarPagina', 'true');
         window.history.back();
-        //window.location.href = "/sgcp/v1/listaProveedores";
       }
     });
   }
