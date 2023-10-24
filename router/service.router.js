@@ -458,71 +458,93 @@ router.delete("/eliminar/ComprobantePago", async (req, res) => {
 });
 
 router.get("/exportar/ComprobantePago", async (req, res) => {
-  const id_usuario = leerUsuario().id_usuario;
-  const num_comprobante = leerUsuario().num_comprobante;
-  const nombre_usuario = leerUsuario().nombreUsuario;
+  try {
+    const id_usuario = leerUsuario().id_usuario;
+    const num_comprobante = leerUsuario().num_comprobante;
+    const nombre_usuario = leerUsuario().nombreUsuario;
 
-  datosComprobantePago(id_usuario, num_comprobante)
-    .then(async (result) => {
-      console.log("Resultado de la consulta:", result);
-      const datos = result[0];
-      datos.fecha = new Date(datos.fecha).toLocaleDateString("es-ES", {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-      });
-      datos.nombre_usuario = nombre_usuario;
+    const result = await datosComprobantePago(id_usuario, num_comprobante);
 
-      // Generar el PDF y guardar en una ubicación temporal
-      crearJson(datos);
-      console.log("Cree el JSON");
-      try {
-        generarPdf();
-        console.log("PDF creado con éxito");
+    if (result.length === 0) {
+      return res
+        .status(400)
+        .json({ error: "No se encontraron datos en la base de datos" });
+    }
 
-        const pdfPath = path.join(
-          __dirname,
-          `../comprobante_pago_n${num_comprobante}.pdf`
-        ); // Ruta al archivo PDF generado
-
-        // Leer el archivo PDF
-        //const pdfStream = fs.createReadStream(pdfPath);
-
-        // Configurar las cabeceras de la respuesta HTTP para indicar que es un archivo PDF
-        //res.setHeader("Content-Disposition", `attachment; filename=comprobante_pago.pdf`);
-        //res.setHeader("Content-Type", "application/pdf");
-        res.sendFile(pdfPath);
-
-        // Enviar el archivo PDF como respuesta
-        //pdfStream.pipe(res);
-      } catch (error) {
-        console.error("Error en la generación del PDF:", error);
-        res.status(500).json({ error: "Error al crear el PDF" });
-      }
-    })
-    .catch((error) => {
-      console.error("Error en la consulta:", error);
-      res.status(400).json({ error: "Error en la consulta de datos" });
+    const datos = result[0];
+    datos.fecha = new Date(datos.fecha).toLocaleDateString("es-ES", {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
     });
+    datos.nombre_usuario = nombre_usuario;
+
+    console.log(datos);
+
+    // Generar el PDF
+    let pdfPath = "";
+    await generarPdf(datos)
+      .then(async () => {
+        setTimeout(() => {
+          pdfPath = path.join(
+            __dirname,
+            `../comprobante_pago_n${num_comprobante}.pdf`
+          );
+
+          // Enviar el PDF al cliente
+          const pdfBuffer = fs.readFileSync(pdfPath);
+          res.setHeader("Content-Type", "application/pdf");
+          res.setHeader(
+            "Content-Disposition",
+            `inline; filename=comprobante_pago_n${num_comprobante}.pdf`
+          );
+          res.send(pdfBuffer);
+          fs.unlink(pdfPath, (err) => {
+            if (err) {
+              console.error("Error al eliminar el archivo PDF:", err);
+            } else {
+              console.log("Archivo PDF eliminado con éxito");
+            }
+          });
+        }, 1000);
+        
+      })
+  } catch (error) {
+    console.error("Error en el controlador:", error);
+    res.status(500).json({ error: "Error al crear o enviar el PDF" });
+  }
 });
 
 router.get("/csv/proveedor", async (req, res) => {
   try {
     // Llama a la función para generar el archivo CSV de manera sincrónica
-    await generarCSV_proveedor();
+    let csvFilePath = ""
+    await generarCSV_proveedor().then(async () => {
+      setTimeout(async () => {
+        csvFilePath = path.join(__dirname, "../proveedores.csv");
+        console.log(csvFilePath);
 
-    const csvFilePath = path.join(__dirname, "../proveedores.csv");
-    console.log(csvFilePath);
+        // Forzar la escritura del archivo antes de enviarlo
+        const csvData = await fs.promises.readFile(csvFilePath);
 
-    // Forzar la escritura del archivo antes de enviarlo
-    const csvData = await fs.promises.readFile(csvFilePath);
-    
-    // Establece las cabeceras de la respuesta para la descarga del archivo
-    res.setHeader("Content-Disposition", "attachment; filename=proveedores.csv");
-    res.setHeader("Content-Type", "text/csv");
+        // Establece las cabeceras de la respuesta para la descarga del archivo
+        res.setHeader(
+          "Content-Disposition",
+          "attachment; filename=proveedores.csv"
+        );
+        res.setHeader("Content-Type", "text/csv");
 
-    // Envía el archivo CSV al cliente
-    res.send(csvData);
+        // Envía el archivo CSV al cliente
+        res.send(csvData);
+        fs.unlink(csvFilePath, (err) => {
+          if (err) {
+            console.error("Error al eliminar el archivo CSV:", err);
+          } else {
+            console.log("Archivo CSV eliminado con éxito");
+          }
+        });
+      }, 1000);
+    });
   } catch (error) {
     console.error("Error al leer el archivo CSV", error);
     res.status(500).json({ error: "Error al leer el archivo CSV" });
@@ -531,21 +553,34 @@ router.get("/csv/proveedor", async (req, res) => {
 
 router.get("/csv/comprobantes", async (req, res) => {
   try {
+    let csvFilePath
     // Llama a la función para generar el archivo CSV de manera sincrónica
-    await generarCSV_comprobantes();
+    await generarCSV_comprobantes().then(async () => {
+      setTimeout(async () => {
+        csvFilePath = path.join(__dirname, "../comprobantes.csv");
+        console.log(csvFilePath);
 
-    const csvFilePath = path.join(__dirname, "../comprobantes.csv");
-    console.log(csvFilePath);
+        // Forzar la escritura del archivo antes de enviarlo
+        const csvData = await fs.promises.readFile(csvFilePath);
 
-    // Forzar la escritura del archivo antes de enviarlo
-    const csvData = await fs.promises.readFile(csvFilePath);
-    
-    // Establece las cabeceras de la respuesta para la descarga del archivo
-    res.setHeader("Content-Disposition", "attachment; filename=comprobantes.csv");
-    res.setHeader("Content-Type", "text/csv");
+        // Establece las cabeceras de la respuesta para la descarga del archivo
+        res.setHeader(
+          "Content-Disposition",
+          "attachment; filename=comprobantes.csv"
+        );
+        res.setHeader("Content-Type", "text/csv");
 
-    // Envía el archivo CSV al cliente
-    res.send(csvData);
+        // Envía el archivo CSV al cliente
+        res.send(csvData);
+        fs.unlink(csvFilePath, (err) => {
+          if (err) {
+            console.error("Error al eliminar el archivo CSV:", err);
+          } else {
+            console.log("Archivo CSV eliminado con éxito");
+          }
+        });
+      }, 1000);
+    });
   } catch (error) {
     console.error("Error al leer el archivo CSV", error);
     res.status(500).json({ error: "Error al leer el archivo CSV" });
@@ -553,7 +588,8 @@ router.get("/csv/comprobantes", async (req, res) => {
 });
 
 router.delete("/cerrar/sesion", async (req, res) => {
-  if (borrarUsuario() && eliminarPdfs())
+  // && eliminarPdfs() relentiza el cierre de sesión
+  if (borrarUsuario())
     res.status(200).json({ message: "Sesión cerrada con éxito" });
   else res.status(400).json({ error: "Error al cerrar sesión" });
 });

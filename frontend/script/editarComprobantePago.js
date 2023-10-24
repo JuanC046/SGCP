@@ -17,6 +17,7 @@ let puedorRegresar = true;
 
 let datosUsuario = null;
 
+
 await fetch("/sgcp/v1/obtener/usuario")
   .then((response) => {
     if (!response.ok) {
@@ -180,6 +181,7 @@ botonGuardar.addEventListener("click", () => {
   } else {
     window.alert("Por favor ingrese todos los datos");
   }
+  localStorage.setItem('recargarPagina', 'true');
   puedorRegresar = true;
   deshabilitarInputs();
 });
@@ -217,9 +219,9 @@ botonRegresar.addEventListener("click", () => {
 });
 
 //------------------------------------------------
-botonExportar.addEventListener("click", () => {
+botonExportar.addEventListener("click", async () => {
   const data_num_comprobante = nComprobante.value;
-  fetch("/sgcp/v1/set/comprobantePago", {
+  await fetch("/sgcp/v1/set/comprobantePago", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -229,7 +231,7 @@ botonExportar.addEventListener("click", () => {
       num_comprobante: data_num_comprobante,
     }),
   })
-    .then(() => {
+    .then(async () => {
       fetch("/sgcp/v1/exportar/ComprobantePago", {
         method: "GET",
         headers: {
@@ -273,4 +275,15 @@ botonExportar.addEventListener("click", () => {
       window.alert("Algo salió mal");
       console.error("Error en la solicitud:", error);
     });
+});
+
+window.addEventListener("load", function () {
+  // Verifica si la variable de recarga está configurada
+  if (localStorage.getItem("recargarPagina") === "true") {
+    // Elimina la variable para que no se recargue la próxima vez
+    localStorage.removeItem("recargarPagina");
+
+    // Recarga la página
+    location.reload();
+  }
 });
