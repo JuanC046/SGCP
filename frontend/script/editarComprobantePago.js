@@ -65,6 +65,15 @@ await fetch("/sgcp/v1/obtener/ComprobantePago", {
   })
   .then((data) => {
     datosComprobantePago = data;
+    datosComprobantePago.fecha = formatearFecha(datosComprobantePago.fecha);
+    nComprobante.value = datosComprobantePago.num_comprobante;
+    fecha.value = datosComprobantePago.fecha;
+    pagadoA.value = datosComprobantePago.nombre_proveedor;
+    descripcionPago.value = datosComprobantePago.descripcion_pago;
+    descripcionDescuento.value = datosComprobantePago.descripcion_descuento;
+    valorDescuento.value = datosComprobantePago.valor_descuento;
+    valorBruto.value = datosComprobantePago.valor_bruto;
+    valorNeto.value = datosComprobantePago.valor_neto;
   });
 function habilitarInputs() {
   var inputs = document.querySelectorAll(".inputHabilitar");
