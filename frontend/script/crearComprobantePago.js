@@ -120,6 +120,10 @@ botonGuardar.addEventListener("click", () => {
     data_valor_bruto !== "" &&
     data_valor_neto !== ""
   ) {
+    if (data_valor_neto < 0 || data_valor_descuento < 0 || data_valor_bruto < 0){
+      window.alert("Los valores no pueden ser negativos");
+      return;
+    }
     fetch("/sgcp/v1/crear/comprobantePago", {
       method: "POST",
       headers: {

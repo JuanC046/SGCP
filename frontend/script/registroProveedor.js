@@ -17,6 +17,24 @@ botonGuardar.addEventListener("click", () => {
     ciudadProveedor !== "" &&
     telefonoProveedor !== ""
   ) {
+    //validar si nit_cc sea un número
+    let regexNumerico = /^[0-9]+$/;
+    if (!regexNumerico.test(nit_ccProveedor)) {
+      window.alert("El nit o cc debe ser un número");
+      return;
+    }
+    //validar que la ciudad no contenga numeros pero si tildes
+    
+    let regexAlfabetico = /^[A-Za-zÀ-ÖØ-öø-ÿÀ-ÖØ]+$/;
+    if (!regexAlfabetico.test(ciudadProveedor)) {
+      window.alert("La ciudad no puede contener números");
+      return;
+    }
+    //validar que el telefono sea un número
+    if (!regexNumerico.test(telefonoProveedor)) {
+      window.alert("El telefono debe ser un número");
+      return;
+    }
     fetch("/sgcp/v1/registro/proveedor", {
       method: "POST",
       headers: {

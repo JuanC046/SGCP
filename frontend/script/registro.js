@@ -26,6 +26,30 @@ botonRegistrarse.addEventListener("click", () => {
     }
   });
   if (band) {
+    //validar si nit_cc sea un número
+    let regexNumerico = /^[0-9]+$/;
+    if (!regexNumerico.test(numero_documento.value)) {
+      window.alert("El numero de documento debe ser un número");
+      return;
+    }
+    //validar que los nombres y apellidos no contengan números 
+    let regexAlfabetico = /^[A-Za-zÀ-ÖØ-öø-ÿÀ-ÖØ]+$/;
+    if (!regexAlfabetico.test(nombre.value)) {
+      window.alert("El nombre no puede contener números");
+      return;
+    }
+    if (!regexAlfabetico.test(segundo_nombre.value) && segundo_nombre.value !== "") {
+      window.alert("El segundo nombre no puede contener números");
+      return;
+    }
+    if (!regexAlfabetico.test(apellido.value)) {
+      window.alert("El apellido no puede contener números");
+      return;
+    }
+    if (!regexAlfabetico.test(segundo_apellido.value) && segundo_apellido.value !== "") {
+      window.alert("El segundo apellido no puede contener números");
+      return;
+    }
     if (contrasena.value === confirmar_contrasena.value) {
       fetch("/sgcp/v1/registro/usuario", {
         method: "POST",

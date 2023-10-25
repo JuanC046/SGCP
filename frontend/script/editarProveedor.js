@@ -66,27 +66,36 @@ function estanHabilitadosInputs() {
 botonEditar.addEventListener("click", () => {
   habilitarInputs();
   botonGuardar.removeAttribute("disabled");
-  botonEditar.setAttribute("disabled", "");
 });
 
 botonGuardar.addEventListener("click", () => {
-  deshabilitarInputs();
   const nombreProveedor = nombre.value;
   const nit_ccProveedor = nit_cc.value;
   const ciudadProveedor = ciudad.value;
   const telefonoProveedor = telefono.value;
-  console.log(
-    nombreProveedor,
-    nit_ccProveedor,
-    ciudadProveedor,
-    telefonoProveedor
-  );
   if (
     nombreProveedor !== "" &&
     nit_ccProveedor !== "" &&
     ciudadProveedor !== "" &&
     telefonoProveedor !== ""
   ) {
+    //validar si nit_cc sea un número
+    let regexNumerico = /^[0-9]+$/;
+    if (!regexNumerico.test(nit_ccProveedor)) {
+      window.alert("El nit o cc debe ser un número");
+      return;
+    }
+    //validar que la ciudad no contenga numeros
+    let regexAlfabetico = /^[A-Za-zÀ-ÖØ-öø-ÿÀ-ÖØ]+$/;
+    if (!regexAlfabetico.test(ciudadProveedor)) {
+      window.alert("La ciudad no puede contener números");
+      return;
+    }
+    //validar que el telefono sea un número
+    if (!regexNumerico.test(telefonoProveedor)) {
+      window.alert("El telefono debe ser un número");
+      return;
+    }
     fetch("/sgcp/v1/actualizar/Proveedor", {
       method: "PUT",
       headers: {
@@ -120,6 +129,7 @@ botonGuardar.addEventListener("click", () => {
         window.alert("Algo salió mal");
       });
   }
+  deshabilitarInputs();
 });
 
 botonRegresar.addEventListener("click", () => {
@@ -137,7 +147,6 @@ botonRegresar.addEventListener("click", () => {
     ciudadProveedor !== "" &&
     telefonoProveedor !== ""
   ) {
-    console.log("Estoy en el if ");
     fetch("/sgcp/v1/set/proveedor", {
       method: "POST",
       headers: {
