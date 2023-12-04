@@ -2,3 +2,4 @@
 .env
 datos.json
 usuario.json
+*.sqlite

@@ -122,7 +122,7 @@ router.post("/ingreso/usuario", async (req, res) => {
   existeUsuario(id_usuario)
     .then((result) => {
       console.log("Resultado de la consulta:", result);
-      if (result.length === 0) {
+      if (Object.keys(result).length === 0) {
         // No existe el usuario
         console.log("El usuario no está registrado");
         res.status(400).json({ error: "El usuario no está registrado" });
@@ -161,10 +161,12 @@ router.post("/ingreso/usuario", async (req, res) => {
 router.post("/registro/usuario", async (req, res) => {
   const id_usuario = req.body.id_usuario;
   console.log(id_usuario);
-  existeUsuario(id_usuario)
+  console.log(req)
+  await existeUsuario(id_usuario)
     .then((result) => {
-      console.log("Resultado de la consulta:", result);
-      if (result.length === 0) {
+      console.log("Resultado de la consulta:", typeof(result));
+      console.log("longitud resultado: ", result.length)
+      if (Object.keys(result).length === 0) {
         // No existe el usuario
         const datos = [
           req.body.id_usuario,
@@ -181,6 +183,7 @@ router.post("/registro/usuario", async (req, res) => {
             res.status(200).json({ message: "Usuario creado con éxito" });
           })
           .catch((error) => {
+            console.log("ERRoRRR")
             console.error("Error en la consulta:", error);
             res.status(400).json({ error: "Error al crear el usuario" });
           });
@@ -198,10 +201,10 @@ router.post("/registro/usuario", async (req, res) => {
 router.post("/registro/proveedor", async (req, res) => {
   const id_usuario = leerUsuario().id_usuario;
   const id_proveedor = req.body.id_proveedor;
-  existeProveedor(id_usuario, id_proveedor)
+  await existeProveedor(id_usuario, id_proveedor)
     .then((result) => {
       console.log("Resultado de la consulta:", result);
-      if (result.length == 0) {
+      if (Object.keys(result).length === 0) {
         // No existe el proveedor
         const datos = [
           req.body.id_proveedor,
@@ -233,7 +236,7 @@ router.post("/registro/proveedor", async (req, res) => {
 router.get("/obtener/listaProveedores/comprobantePago", async (req, res) => {
   const id_usuario = leerUsuario().id_usuario;
 
-  listaProveedoresCompPago(id_usuario)
+  await listaProveedoresCompPago(id_usuario)
     .then((result) => {
       console.log("Resultado de la consulta:", result);
       res.status(200).json(result);
@@ -465,7 +468,7 @@ router.get("/exportar/ComprobantePago", async (req, res) => {
 
     const result = await datosComprobantePago(id_usuario, num_comprobante);
 
-    if (result.length === 0) {
+    if (Object.keys(result).length === 0) {
       return res
         .status(400)
         .json({ error: "No se encontraron datos en la base de datos" });

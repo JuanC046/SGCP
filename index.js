@@ -3,7 +3,11 @@ const { config } = require("./config")
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
+const {initializeDatabase} = require("./config/init.db");
 const app = express();
+
+initializeDatabase()
+
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
