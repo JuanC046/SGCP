@@ -1,3 +1,4 @@
+@import url(basic.css);
 #body-inicio {
     display: grid;
     place-items: center;
@@ -5,6 +6,7 @@
 }
 
 h1 {
+    text-align: center;
     margin-top: 10px;
     margin-bottom: 20px;
 }

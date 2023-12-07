@@ -3,75 +3,81 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/style/css/main.css" />
+    <link rel="stylesheet" href="/style/css/comprobantePago.css" />
     <!-- Incluye las bibliotecas jsPDF y Handlebars -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
-
     <title>Comprobante de Pago</title>
   </head>
   <body id="body-comprobantePago">
-    <h2 id="h2-CP">COMPROBANTE DE PAGO</h2>
-    <h3 id="h3-CP">>>NOMBREUSUARIO>></h3>
-    <div id="wrapper-cp">
-      <div id="wrapper-fecha">
-        <label for="fecha" id="label-fecha">FECHA(*)</label>
-        <input type="date" name="fecha" id="fecha" disabled/>
+    <header>
+      <h2 id="h2-CP">COMPROBANTE DE PAGO</h2>
+      <h3 id="h3-CP">>>NOMBREUSUARIO>></h3>
+    </header>
+    <main>
+      <div id="wrapper-cp">
+        <section id="wrapper-fecha">
+          <label for="fecha" id="label-fecha">FECHA(*)</label>
+          <input type="date" name="fecha" id="fecha" disabled/>
+        </section>
+        <section id="wrapper-nComprobante">
+          <label for="nComprobante" id="label-nComprobante"
+            >N° COMPROBANTE</label
+          >
+          <input type="number" name="nComprobante" id="nComprobante" disabled />
+        </section>
+        <section id="wrapper-pagadoA">
+          <label for="pagadoA" id="label-pagadoA">PAGADO A(*)</label>
+          <input type="text" id="seleccionPagadoA" disabled />
+          <select name="pagadoA" id="pagadoA" disabled>
+            <option value="" text="..."></option>
+          </select>
+        </section>
+        <section id="wrapper-descripcionPago">
+          <label for="descripcionPago" id="label-descripcionPago"
+            >DESCRIPCIÓN DEL PAGO(*)</label
+          >
+          <textarea
+            name="descripcionPago"
+            id="descripcionPago"
+            cols="20"
+            rows="5"
+            class="inputHabilitar"
+            disabled
+          ></textarea>
+        </section>
+        <label for="descuento" id="label-descuento">DESCUENTO</label>
+        <section id="wrapper-descripcionDescuento">
+          <label for="descripcionDescuento" id="label-descripcionDescuento"
+            >DESCRIPCIÓN</label
+          >
+          <textarea
+            name="descripcionDescuento"
+            id="descripcionDescuento"
+            cols="20"
+            rows="5"
+            class="inputHabilitar"
+            disabled
+          ></textarea>
+        </section>
+        <section id="wrapper-valorDescuento">
+          <label for="valorDescuento" id="label-valorDescuento">VALOR</label>
+          <input type="number" name="valorDescuento" id="valorDescuento" class="inputHabilitar" disabled />
+        </section>
+        <section id="wrapper-valorBruto">
+          <label for="valorBruto" id="label-valorBruto">VALOR BRUTO(*)</label>
+          <input type="number" name="valorBruto" id="valorBruto" class="inputHabilitar" disabled/>
+        </section>
+        <section id="wrapper-valorNeto">
+          <label for="valorNeto" id="label-valorNeto">VALOR NETO(*)</label>
+          <input type="number" name="valorNeto" id="valorNeto" class="inputHabilitar" disabled/>
+        </section>
+        <nav id="wrapper-options">
+          <button id="buttonEditar" class="buttonC2">EDITAR</button>
+          <button id="buttonGuardar" class="buttonC2">GUARDAR</button>
+          <button id="buttonExportar" class="buttonC2">EXPORTAR</button>
+          <button id="buttonRegresar" class="buttonC2">REGRESAR</button>
+        </nav>
       </div>
-      <div id="wrapper-nComprobante">
-        <label for="nComprobante" id="label-nComprobante">N° COMPROBANTE</label>
-        <input type="number" name="nComprobante" id="nComprobante" disabled/>
-      </div>
-      <div id="wrapper-pagadoA">
-        <label for="pagadoA" id="label-pagadoA">PAGADO A(*)</label>
-        <input type="text" name="pagadoA" id="seleccionPagadoA" disabled/>
-      </div>
-      <div id="wrapper-descripcionPago">
-        <label for="descripcionPago" id="label-descripcionPago"
-          >DESCRIPCIÓN DEL PAGO(*)</label
-        >
-        <textarea
-          name="descripcionPago"
-          id="descripcionPago"
-          cols="30"
-          rows="10"
-          class="inputHabilitar"
-          disabled
-        ></textarea>
-      </div>
-      <label for="descuento" id="label-descuento">DESCUENTO</label>
-      <div id="wrapper-descripcionDescuento">
-        <label for="descripcionDescuento" id="label-descripcionDescuento"
-          >DESCRIPCIÓN</label
-        >
-        <textarea
-          name="descripcionDescuento"
-          id="descripcionDescuento"
-          cols="30"
-          rows="10"
-          class="inputHabilitar"
-          disabled
-        ></textarea>
-      </div>
-      <div id="wrapper-valorDescuento">
-        <label for="valorDescuento" id="label-valorDescuento">VALOR</label>
-        <input type="number" name="valorDescuento" id="valorDescuento" class="inputHabilitar" disabled/>
-      </div>
-      <div id="wrapper-valorBruto">
-        <label for="valorBruto" id="label-valorBruto">VALOR BRUTO(*)</label>
-        <input type="number" name="valorBruto" id="valorBruto" class="inputHabilitar" disabled/>
-      </div>
-      <div id="wrapper-valorNeto">
-        <label for="valorNeto" id="label-valorNeto">VALOR NETO(*)</label>
-        <input type="number" name="valorNeto" id="valorNeto" class="inputHabilitar" disabled/>
-      </div>
-    </div>
-    <div id="wrapper-options">
-      <button id="buttonEditar" class="buttonC2">EDITAR</button>
-      <button id="buttonGuardar" class="buttonC2">GUARDAR</button>
-      <button id="buttonExportar" class="buttonC2" >EXPORTAR</button>
-      <button id="buttonRegresar" class="buttonC2" >REGRESAR</button>
-    </div>  
+    </main>
   </body>
   <script type="module" src="/script/editarComprobantePago.js"></script>
 </html>

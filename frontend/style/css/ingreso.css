@@ -1,4 +1,5 @@
 /* Resetear los márgenes y el relleno del cuerpo y establecer un fondo */
+@import url(basic.css);
 #body-ingreso {
     margin: 0;
     padding: 0;
@@ -26,8 +27,8 @@ h3 {
 #label-usuario,
 #label-contrasena {
     margin-left: 0px;
-    margin-top: 20px; /* Espacio entre las etiquetas y los campos de entrada */
-    margin-bottom: 20px;
+    margin-top: 10px; /* Espacio entre las etiquetas y los campos de entrada */
+    margin-bottom: 10px;
     font-weight: bold; /* Hacer que las etiquetas sean más visibles */
 }
 
@@ -35,25 +36,24 @@ h3 {
 #usuario,
 #contrasena {
     width: 30%;
+    height: 10px;
     padding: 10px;
-    margin: 5px 0;
     background-color: var(--transparent);
-    text-align: left;
+    text-align: center;
     border: 1px solid var(--border);
     border-radius: 5px;
+    margin-bottom: 16px;
 }
 
 /* Estilos para el botón de ingreso */
-#buttonIngresar {
-    margin: 20px auto; /* Centrar el botón horizontalmente y agregar margen superior */
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-}
+
 
 
 /* Estilos para los enlaces */
 a {
     text-decoration: none; /* Evitar subrayado en los enlaces */
+}
+
+button {
+    margin: 20px;
 }

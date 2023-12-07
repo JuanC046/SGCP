@@ -1,3 +1,4 @@
+@import url(basic.css);
 #body-registro {
     display: flex;
     flex-direction: column;
@@ -5,9 +6,17 @@
     text-align: center;
     align-items: center;
     padding: 10px;
-    margin-top: 10px;
+    margin: auto;
 }
 
+h1, h3 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+label {
+    margin-bottom: 10px;
+}
 #nombre,
 #segundoNombre,
 #apellido,
@@ -22,6 +31,10 @@
     background-color: var(--transparent);
     border: 1px solid var(--border);
     border-radius: 5px;
+    margin-bottom: 20px;
+}
+#tipoDocumento {
+    margin-bottom: 20px;
 }
 #tipoDocumento,
 #tipoDocumento_nit,

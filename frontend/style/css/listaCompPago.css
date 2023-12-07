@@ -1,31 +1,80 @@
+@import url(basic.css);
 #body-listaComprobantePago {
     display: flex;
     flex-direction: column;
+    text-align: center;
 }
 nav {
-    margin-top: 50px;
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 30% 40% 30%);
     text-align: center;
+    gap: auto;
+    margin: 20px;
 }
 #buttonMenu,
-#a-menu {
-    margin-top: 0px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
+#a-menu,
 #buttonCrear {
-    margin-top: 0px;
+    margin: auto;
 }
+r {
+    margin: auto;
+}
+
+#wrapper-titulosProv {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    text-align: center;
+    justify-content: space-around;
+    margin-left: 100px;
+    margin-right: 100px;
+    padding: 10px; 
+}
+
+
+
+/*--------------*/
 #wrapper-titulosCP {
-    margin-left: 210px;
-    margin-right: 220px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     text-align: center;
+    margin-left: 100px;
+    margin-right: 100px;
     padding: 10px;
 }
+
+
+#contenedor-filas{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 100px;
+    margin-right: 100px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;   
+}
+.row {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .column {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .row:hover {
+    background-color: #6DA5C0;
+  }
+
+
 
 #wrapper-orden {
     display: flex;
@@ -33,7 +82,7 @@ nav {
     text-align: center;
     justify-content: center;
     margin-top: 15px;
-    margin-bottom: 0px;
+    margin-bottom: 20px;
     #label-ordenado {
         text-align: center;
         margin-top: 0px;
@@ -44,14 +93,13 @@ nav {
         width: 20%;
         height: 20px;
         margin-top: 0px;
-        margin-right: 5px;
         background-color: var(--transparent);
         border-color: var(--border);
         border-radius: 5px;
     }
     #ordenado {
         margin-left: 0px;
-        width: 2%;
+        width: 15px;
         height: 25px;
         background-color: var(--transparent);
         border-color: var(--border);
@@ -69,29 +117,12 @@ option {
     background-color: var(--background);
 }
 
+
 footer{
     grid-row: -1;
     display: flex;
     flex-direction: row;
     text-align: center;
     padding: 10px;
-    margin-top: 0px;
-    #buttonVer{
-        position: fixed;
-        bottom: 50px;
-        left: 300px;
-
-    }
-    #buttonEliminar{
-        position: fixed;
-        bottom: 50px;
-        left: 550px;
-
-    }
-    #buttonExportar{
-        position: fixed;
-        bottom: 50px;
-        left: 800px;
-    }
+    margin-top: 20px;
 }
-
